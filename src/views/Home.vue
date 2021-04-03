@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <h1>Homepage</h1>
+    <!-- get a component and send just the parameter -->
+    <h2>Top anime upcoming</h2>
+    <p>List of top anime</p>
+    <AnimeList :animeList="animeList" />
+    <!-- <h2>Top anime airing</h2>
+    <p>List of top anime</p>
+    <h2>fan favorite</h2>
+    <p>List fan favorite</p> -->
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+// import BaseButton from "../components/bases/BaseButton";
+import AnimeList from "../components/animes/AnimeList";
+import getAnimeList from "../composables/getAnimeList";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    AnimeList,
+  },
+  setup() {
+    const { animeList, loadAnime } = getAnimeList();
+
+    loadAnime();
+    return { animeList };
+  },
+};
 </script>

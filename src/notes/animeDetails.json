@@ -1,0 +1,42 @@
+{
+  "anime" : {
+    "aired": {
+      "from": "date",
+      "string": "Jan 21, 1998",
+      "to": null
+    },
+    "airing": false,
+    "background": null,
+    "broadcast": "Sundays at 23:00 (jst)",
+    "duration": "45 min per ep",
+    "endingithemes": ["Kaze nonf kdfljskfj", "dknfn kdflkj"],
+    "episodes": 6,
+    "favorites": 5,
+    "genres": [
+      "mal_id: 1", "type: anime", "type: Sci-fi", "url: genreUrl"
+    ],
+    "image_url": "link to jpg image",
+    "lincenors": ["mal_id", "name: licencors name", "type: anime", "url: url"],
+    "mal_id": 1225,
+    "members": 2748,
+    "opening_themes": ["0: opening title"],
+    "popularity": 8949,
+    "premiered": "Summer 2006",
+    "producers": [],
+    "rank": 59049,
+    "rating": "PG-13 - Teens 13 or older",
+    "score": 6.66,
+    "scored_by": 891,
+    "source": "Unknown",
+    "status": "Finished Airing",
+    "studios": ["mal_id: 179", "name: ACGT", "type: anime", "url: studio url"],
+    "synopsis": "paragraphe",
+    "title": "Project Blue",
+    "title_english": "Project blue",
+    "title_japanese": "Some japanese fonts",
+    "title_synonyms": [],
+    "trailer_url": "some url",
+    "type": "TV",
+    "url": "my anime list url"
+  }
+}
