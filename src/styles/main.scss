@@ -10,6 +10,13 @@
 }
 body {
   background-color: $bg-clr;
+  // max-width: 1450px;
+  color: $primary-font;
+}
+
+h2 {
+  font-size: 18px;
+  // padding-right: 5px
 }
 
 a {
@@ -23,7 +30,7 @@ a {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1450px;
   margin: 0 auto;
   padding: 0 10px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar container">
+  <div class="navbar-container">
     <nav>
       <!-- Add some image here -->
       <h1><router-link :to="{ name: 'Home' }">Anime App</router-link></h1>
@@ -16,13 +16,15 @@ export default {};
 </script>
 
 <style lang="scss">
-.navbar {
+.navbar-container {
   background: white;
+  width: vw;
+  padding: 10px 20px;
 }
 nav {
   display: flex;
   align-items: center;
-  max-width: 1200px;
+  // max-width: 1200px;
   margin: 0 auto;
   // background: white;
   padding: 10px 0;

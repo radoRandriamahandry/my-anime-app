@@ -1,50 +1,91 @@
 <template>
   <!-- TODO get example from idbm and myAnimeList -->
-  <!-- Use card -->
-  <div class="card-container">
-    <!-- image size : 225x336 -->
-    <img
-      :src="anime.imageUrl"
-      :alt="anime.title"
-      class="card-container__image"
-    />
-    <p>Anime title : {{ anime.title }}</p>
+  <div class="card">
+    <img :src="anime.imageUrl" :alt="anime.title" class="card__image" />
+
+    <div class="card__info">
+      <div class="card__description">
+        <div>
+          <div class="card__title">{{ anime.title }}</div>
+          <div class="card__anime-genre">
+            <ul>
+              <li v-for="genre in anime.genres" :key="genre">
+                {{ genre }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- some info and title or episode -->
+        <!-- anime genre -->
+
+        <div class="card__episode-info">
+          <div>Format : {{ anime.format }}</div>
+          <div>{{ anime.episodes }}ep / {{ anime.duration }}mn</div>
+        </div>
+      </div>
+
+      <div class="card__footer">
+        Add state airing and date here
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// import { computed } from "vue";
-import getAnime from "@/composables/getAnime";
-
 export default {
   props: ["anime"],
   components: {},
 
-  setup(props) {
-    // getting the anime image
-    // use composable getAnime to get anime details
-    const { anime: animeDetails, fetchData: getAnimeInfo } = getAnime();
-    getAnimeInfo(props.anime.id);
-    console.log(animeDetails);
-
-    // Getting anime image
-    // const detailedAnime = computed(() => {
-    //   return anime
-    // })
-    // return { detailedAnime };
-  },
+  setup() {},
 };
 </script>
 
 <style lang="scss">
-.card-container {
+@import "@/styles/abstracts/fonts";
+
+.card {
   width: 337px;
+  height: 390px;
   background: white;
 
   &__image {
     width: 337px;
     height: 241px;
     object-fit: cover;
+    object-position: top;
+  }
+
+  &__info {
+    display: grid;
+    grid-template-rows: 105px 40px;
+    font-size: $font-size;
+  }
+  &__description {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    // gap: 4px;
+    justify-content: space-around;
+  }
+  &__title {
+    font-weight: bold;
+  }
+  & li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 6px;
+  }
+
+  &__episode-info {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__footer {
+    border-top: solid 0.5px #eee;
+    // justify-self: center;
+    padding: 5px 15px;
+    // align-self: center;
   }
 }
 </style>

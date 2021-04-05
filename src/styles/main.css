@@ -11,6 +11,11 @@
 
 body {
   background-color: #f4f7f6;
+  color: #3e3e3e;
+}
+
+h2 {
+  font-size: 18px;
 }
 
 a {
@@ -24,7 +29,7 @@ a {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1450px;
   margin: 0 auto;
   padding: 0 10px;
 }

@@ -1,45 +1,46 @@
-import { ref } from "vue";
-import jikanjs from "jikanjs";
+import axios from "axios";
 
-// TODO add isPending status
-
-const anime = ref(null);
-
-const fetchData = async (id) => {
-  try {
-    const res = await jikanjs.loadAnime(id);
-    console.log("Res : ", res);
-    // TODO add validation and error handling
-    anime.value = {
-      title: res.title,
-      synopsis: res.synopsis,
-      episodes: res.episodes,
-      aired: res.aired,
-      airing: res.airing,
-      score: res.score,
-      scoredBy: res.scored_by,
-      favorites: res.favorites,
-      rank: res.rank,
-      popularity: res.popularity,
-      type: res.type,
-      genres: [...res.genres],
-      status: res.status,
-      studios: [...res.studios],
-      premiered: res.premiered,
-      broadcast: res.broadcast,
-      duration: res.duration,
-      rating: res.rating,
-      opening: [...res.opening_themes],
-      ending: [...res.ending_themes],
-    };
-    // return anime;
-  } catch (err) {
-    console.error(err.message);
+var query = `
+query ($page: Int) {
+  Page (page: $page, perPage: 10) {
+    pageInfo {
+      total
+      currentPage      
+    }
+    media (type: ANIME, sort: SCORE_DESC, season: SPRING, seasonYear: 2021) {
+      id
+      title {
+        romaji
+      }
+    }
   }
+}
+`;
+
+const variables = {
+  // perPage: 10,
+  page: 1,
 };
+
+const url = "https://graphql.anilist.co";
 
 const getAnime = () => {
-  return { anime, fetchData };
+  const fetchData = async () => {
+    try {
+      const res = await axios.post(url, {
+        query: query,
+        variables: variables,
+      });
+
+      const media = { ...res.data };
+
+      console.log(media);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+  return { fetchData };
 };
 
+// export default getAnime;
 export default getAnime;
