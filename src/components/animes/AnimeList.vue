@@ -33,8 +33,11 @@ export default {
 
   &__container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 30px;
+    // grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(236px, 1fr));
+    // TODO use media queries to adjust it
+    justify-content: space-between;
+    gap: 40px 20px;
   }
 }
 </style>

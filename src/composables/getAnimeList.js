@@ -1,12 +1,40 @@
 import { ref } from "@vue/reactivity";
 import axios from "axios";
-// import dateFns from "date-fns";
 
-// const formatDate = (seconds) => {
-//   const helperDate = dateFns.addSeconds(new Date(0), seconds);
-//   return dateFns.format(helperDate, "jj:hh:mm:ss");
-// };
+import format from "date-fns/format";
+import addSeconds from "date-fns/addSeconds";
 
+// Format Data
+const formatDate = (seconds) => {
+  const helperDate = addSeconds(new Date(0), seconds);
+  return format(helperDate, "do E, HH:mm");
+};
+
+// Validate data
+const validateEpisodes = (episodes) => {
+  if (episodes) {
+    return episodes;
+  } else {
+    return "??";
+  }
+};
+
+// Get and validate NextAiringEpisode and current episode
+const getNextEpisodeInfo = (nextAiringEpisode) => {
+  let currentEpisode;
+  let timeUntilAiring;
+
+  if (nextAiringEpisode != null) {
+    currentEpisode = nextAiringEpisode.episode - 1;
+    timeUntilAiring = formatDate(nextAiringEpisode.timeUntilAiring);
+  } else {
+    currentEpisode = 0;
+    timeUntilAiring = "??";
+  }
+  return { currentEpisode, timeUntilAiring };
+};
+
+// Vairables for page info
 const variables = {
   page: 1,
   perPage: 8,
@@ -31,18 +59,12 @@ query ($page: Int, $perPage: Int) {
         episode
         timeUntilAiring
       }
+      averageScore
+      status
     }
   }
 }
 `;
-
-//           title: anime.title,
-//           id: anime.mal_id,
-//           score: anime.score,
-//           startDate: anime.start_date,
-//           type: anime.type,
-//           rank: anime.rank,
-//           imageUrl: anime.image_url,
 
 const url = "https://graphql.anilist.co";
 
@@ -60,45 +82,26 @@ const getAnimeList = () => {
       const tempAnimeList = [...res.data.data.Page.media];
 
       tempAnimeList.forEach((anime) => {
-        // console.log("Next episode : ", nextEpisodeAiringAt);
-
-        // console.log(currentEpisode);
-        // let tempCurrentEpisode =
-        //   anime.nextAiringEpisode.episode > 0
-        //     ? anime.nextAiringEpisode.episode - 1
-        //     : 0;
-        // let tempTimeUntilAiring =
-        //   anime.nextAiringEpisode.timeUntilAiring > 0
-        //     ? anime.nextAiringEpisode.timeUntilAiring
-        //     : "Unknown";
-
-        // check if Next Airing Episode is defined
-        let tempCurrentEpisode;
-        let tempTimeUntilAiring;
-        if (anime.nextAiringEpisode != null) {
-          tempCurrentEpisode = anime.nextAiringEpisode.episode - 1;
-          tempTimeUntilAiring = anime.nextAiringEpisode.timeUntilAiring;
-        } else {
-          tempCurrentEpisode = 0;
-          tempTimeUntilAiring = "Unknown";
-        }
+        const { currentEpisode, timeUntilAiring } = getNextEpisodeInfo(
+          anime.nextAiringEpisode
+        );
 
         const tempAnime = {
           id: anime.id,
           title: anime.title.romaji,
           imageUrl: anime.coverImage.extraLarge,
-          episodes: anime.episodes,
           genres: [...anime.genres],
-          duration: anime.duration,
+          duration: anime.duration > 0 ? anime.duration : "??",
           format: anime.format,
-          currentEpisode: tempCurrentEpisode,
-          timeUntilAiring: tempTimeUntilAiring,
-          // check number of released episode
+          episodes: validateEpisodes(anime.episodes),
+          currentEpisode: currentEpisode,
+          timeUntilAiring: timeUntilAiring,
+          averageScore: anime.averageScore,
+          status: anime.status,
         };
+
         animeList.value.push(tempAnime);
       });
-
-      console.log(animeList.value);
     } catch (err) {
       console.log(err.message);
     }
@@ -106,5 +109,4 @@ const getAnimeList = () => {
   return { animeList, fetchData };
 };
 
-// export default getAnime;
 export default getAnimeList;
