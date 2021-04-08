@@ -12,6 +12,12 @@ body {
   background-color: $bg-clr;
   // max-width: 1450px;
   color: $primary-font;
+
+  &.modal-open {
+    overflow: hidden;
+    // To avoid content shifting when the scroll disappeart
+    padding-right: 17px;
+  }
 }
 
 h2 {

@@ -14,6 +14,11 @@ body {
   color: #585858;
 }
 
+body.modal-open {
+  overflow: hidden;
+  padding-right: 17px;
+}
+
 h2 {
   font-size: 18px;
 }

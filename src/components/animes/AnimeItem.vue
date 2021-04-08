@@ -1,10 +1,18 @@
 <template>
   <!-- TODO get example from idbm and myAnimeList -->
-  <div class="card">
-    <div>
-      <img :src="anime.imageUrl" :alt="anime.title" class="card__image" />
-    </div>
 
+  <!-- <div class="card" @click="gotoAnimeDetails(anime.id)"> -->
+  <div class="card" @click="handleModalDisplay">
+    <BaseModal
+      :showModal="showModal"
+      :anime="animeDetails"
+      @close="closeModal"
+    />
+
+    <div
+      class="card__image"
+      :style="{ backgroundImage: `url(${anime.imageUrl})` }"
+    ></div>
     <div class="card__info">
       <div class="card__title">{{ anime.title }}</div>
       <div class="card__genre">
@@ -14,13 +22,6 @@
           </li>
         </ul>
       </div>
-      <!-- <div class="card__episode card__flex">
-        <div>Format : {{ anime.format }}</div>
-        <div>
-          duration : {{ anime.duration
-          }}<span v-if="anime.duration != '??'">mn</span>
-        </div>
-      </div> -->
 
       <div class="card__schedule card__flex">
         <div>Ep. {{ anime.currentEpisode }}/{{ anime.episodes }}</div>
@@ -40,11 +41,41 @@
 </template>
 
 <script>
+// import { useRouter } from "vue-router";
+import { ref } from "vue";
+import BaseModal from "../bases/BaseDialog";
+
 export default {
   props: ["anime"],
-  components: {},
+  components: {
+    BaseModal,
+  },
 
-  setup() {},
+  setup(props) {
+    // const router = useRouter();
+
+    // const gotoAnimeDetails = (id) => {
+    // TODO check if on mobile then redirect to a page else use popup
+    // router.push({ name: "AnimeDetails", params: { id: id } });
+    // };
+
+    const animeDetails = ref();
+    animeDetails.value = { ...props.anime };
+
+    // Manage Modal Display
+    const showModal = ref(false);
+    const closeModal = () => {
+      showModal.value = false;
+      document.body.classList.remove("modal-open");
+    };
+
+    const handleModalDisplay = () => {
+      showModal.value = true;
+      document.body.classList.add("modal-open");
+    };
+
+    return { animeDetails, showModal, closeModal, handleModalDisplay };
+  },
 };
 </script>
 
@@ -55,13 +86,19 @@ export default {
 .card {
   background: white;
   height: 384px;
+  height: 100%;
   display: grid;
   color: $primary-font;
-  grid-template-rows: 240px 3fr 1fr;
+  // grid-template-rows: 240px 3fr 1fr;
+  grid-template-rows: 6fr 3fr 1fr;
 
   &:hover {
     cursor: pointer;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+
+    .card__image {
+      filter: grayscale(0%);
+    }
   }
 
   &__flex {
@@ -70,16 +107,21 @@ export default {
   }
 
   &__image {
-    width: 100%;
-    height: auto;
-    max-width: 491px;
-    max-height: 352px;
-    display: block;
-    overflow: hidden;
-    object-fit: cover;
-    object-position: top;
-    overflow: hidden;
+    background-size: cover;
+    filter: grayscale(40%);
   }
+
+  // &__image {
+  //   width: 100%;
+  //   height: auto;
+  //   max-width: 491px;
+  //   max-height: 352px;
+  //   display: block;
+  //   overflow: hidden;
+  //   object-fit: cover;
+  //   object-position: top;
+  //   overflow: hidden;
+  // }
 
   &__info {
     font-size: $font-size;
@@ -91,18 +133,7 @@ export default {
     justify-content: space-around;
   }
 
-  &__status {
-    text-transform: lowercase;
-    // padding: 2px 5px;
-    // border: 1px solid $clr-primary;
-    // background: $clr-primary;
-    color: $clr-primary;
-    font-weight: bold;
-    border-radius: 45px;
-  }
-
   &__title {
-    // margin-top: 0.4em;
     font-size: $font-size;
     color: $primary-font;
     font-weight: bold;
@@ -119,14 +150,6 @@ export default {
       border-radius: 45px;
       color: $light-grey;
       font-size: 12px;
-      // font-weight: bold;
-    }
-  }
-
-  &__score {
-    // color: $primary;
-    &--number {
-      font-weight: bold;
     }
   }
 
@@ -137,6 +160,19 @@ export default {
     padding: 0 15px;
     align-items: center;
     background: white;
+
+    .card__status {
+      text-transform: lowercase;
+      color: $clr-primary;
+      font-weight: bold;
+      border-radius: 45px;
+    }
+
+    .card__score {
+      &--number {
+        font-weight: bold;
+      }
+    }
   }
 }
 </style>

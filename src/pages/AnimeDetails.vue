@@ -1,38 +1,40 @@
 <template>
   <div class="container">
     <p>Anime Details page</p>
-    <BaseButton @click="handleClick">Get anime info</BaseButton>
-    <AnimeItem v-if="anime" :anime="anime" />
+    <!-- <BaseButton @click="handleClick">Get anime info</BaseButton> -->
+    <!-- <AnimeItem v-if="anime" :anime="anime" /> -->
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+// import { ref } from "vue";
 
 // Components
-import AnimeItem from "../components/animes/AnimeItem";
-import BaseButton from "../components/bases/BaseButton";
+// import AnimeItem from "../components/animes/AnimeItem";
+// import BaseButton from "../components/bases/BaseButton";
 
 // Composables
-import getAnime from "../composables/getAnime";
+// import getAnime from "../composables/getAnime";
 
 export default {
   props: ["id"],
-  components: {
-    AnimeItem,
-    BaseButton,
-  },
+  // components: {
+  //   AnimeItem,
+  //   BaseButton,
+  // },
   setup(props) {
-    const { fetchData } = getAnime();
+    // const { fetchData } = getAnime();
 
-    const anime = ref(null);
+    // const anime = ref(null);
 
-    const handleClick = async () => {
-      // TODO add validation and error handling
-      anime.value = await fetchData(props.id);
-    };
+    console.log(props.id);
 
-    return { handleClick, anime };
+    // const handleClick = async () => {
+    //   // TODO add validation and error handling
+    //   anime.value = await fetchData(props.id);
+    // };
+
+    // return { handleClick, anime };
   },
 };
 </script>

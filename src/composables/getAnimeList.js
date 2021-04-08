@@ -48,9 +48,11 @@ query ($page: Int, $perPage: Int) {
       title {
         romaji
       }
+      description
       coverImage {
         extraLarge
       }
+      bannerImage
       episodes
       genres
       duration
@@ -89,7 +91,9 @@ const getAnimeList = () => {
         const tempAnime = {
           id: anime.id,
           title: anime.title.romaji,
+          synopsis: anime.description,
           imageUrl: anime.coverImage.extraLarge,
+          bannerImage: anime.bannerImage,
           genres: [...anime.genres],
           duration: anime.duration > 0 ? anime.duration : "??",
           format: anime.format,
@@ -97,6 +101,7 @@ const getAnimeList = () => {
           currentEpisode: currentEpisode,
           timeUntilAiring: timeUntilAiring,
           averageScore: anime.averageScore,
+          // TODO check all available status and format it
           status: anime.status,
         };
 

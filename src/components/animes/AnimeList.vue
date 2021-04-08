@@ -13,11 +13,15 @@
 <script>
 // components
 import AnimeItem from "../animes/AnimeItem";
+// import BaseModal from "../bases/BaseDialog";
 
 export default {
   props: ["animeList"],
   components: {
     AnimeItem,
+  },
+  setup() {
+    // return { showModal, closeModal };
   },
 };
 </script>
