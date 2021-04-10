@@ -1,18 +1,22 @@
 <template>
   <!-- Get the cover image first -->
-  <div class="slides">
+  <!-- TODO check if animeList is not null -->
+  <div id="slider">
     <div v-for="(anime, index) in animeList" :key="anime.id">
+      <!-- <transition :name="transitionName" mode="out-in"> -->
       <AnimeCarouselItem
-        :ref="setItemRef"
-        class="slide"
         :index="index"
         :activeSlide="activeSlide"
+        :transitionName="transitionName"
+        class="slider__content"
       />
+      <!-- </transition> -->
     </div>
   </div>
+  <!-- </div> -->
 
-  <button @click="changeActiveSlide('previous')">Previous slide</button>
-  <button @click="changeActiveSlide('next')">Next slide</button>
+  <button @click="updateActiveSlide('previous')">Previous slide</button>
+  <button @click="updateActiveSlide('next')">Next slide</button>
 </template>
 
 <script>
@@ -21,7 +25,7 @@ import getAnimeList from "@/composables/getAnimeList";
 
 // Components
 import AnimeCarouselItem from "@/components/animes/AnimeCarouselItem";
-import { onBeforeUpdate, onUpdated, ref } from "vue";
+import { ref } from "vue";
 
 export default {
   components: {
@@ -54,87 +58,67 @@ export default {
 
     // Manage Carousel
     // Set the first item to be active
+    // Transition
+    const transitionName = ref("fade");
+
     const activeSlide = ref(0);
 
-    let itemRefs = [];
-
-    const setItemRef = (el) => {
-      if (el) {
-        itemRefs.push(el);
-      }
-    };
-    activeSlide.value = 0;
-    // find a away to link active to the element
-    // pass acitve as a props
-
-    onBeforeUpdate(() => (itemRefs = []));
-    onUpdated(() =>
-      itemRefs.forEach((el, index) => {
-        if (index === activeSlide.value) {
-          el.$el.classList.add("slide__active");
-        } else {
-          el.$el.classList.add("slide__invisible");
-        }
-      })
-    );
-
-    // Manage active slide
-    const changeActiveSlide = (action) => {
-      let previousActiveSlide = activeSlide.value;
-
+    const updateActiveSlide = (action) => {
+      let temp = activeSlide.value;
       if (action == "next") {
-        if (activeSlide.value == itemRefs.length - 1) {
+        transitionName.value = "slide-next";
+        if (temp == animeList.value.length - 1) {
           activeSlide.value = 0;
         } else {
-          activeSlide.value = activeSlide.value + 1;
+          activeSlide.value = temp + 1;
         }
       }
       if (action == "previous") {
-        if (activeSlide.value == 0) {
-          activeSlide.value = itemRefs.length - 1;
+        transitionName.value = "slide-prev";
+
+        if (temp == 0) {
+          activeSlide.value = animeList.value.length - 1;
         } else {
-          activeSlide.value = activeSlide.value - 1;
+          activeSlide.value = temp - 1;
         }
       }
-
-      itemRefs.forEach((el, index) => {
-        if (index == activeSlide.value) {
-          el.$el.classList.add("slide__active");
-          el.$el.classList.remove("slide__invisible");
-        } else if (index == previousActiveSlide) {
-          el.$el.classList.remove("slide__active");
-        } else {
-          el.$el.classList.add("slide__invisible");
-        }
-      });
+    };
+    const setActiveSlide = (newActiveSlideIndex) => {
+      activeSlide.value = newActiveSlideIndex;
     };
 
-    return { animeList, fetchData, setItemRef, activeSlide, changeActiveSlide };
+    return {
+      animeList,
+      fetchData,
+      activeSlide,
+      updateActiveSlide,
+      setActiveSlide,
+      transitionName,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.slides {
-  // display: grid;
-  // grid-template-columns: 1fr 1fr 1fr 1fr;
-  // width: 90%;
+#slider {
+  width: 100%;
+  position: relative;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  // background: white;
 }
-.slide {
-  padding: 100px;
-  margin: 0 auto;
-  background: blue;
-  text-align: center;
-  width: 70%;
-  color: white;
-  font-weight: bold;
-  text-transform: uppercase;
-
-  &__invisible {
-    display: none;
-  }
-  // &__active {
-  //   background: green;
-  // }
+.slider__content {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // padding: 10px;
 }
 </style>
