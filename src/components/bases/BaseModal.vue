@@ -1,17 +1,13 @@
 <template>
   <teleport to="body">
+    <!-- TODO import characters -->
     <div v-if="showModal" class="backdrop" @click.self="tryClose">
       <div class="modal">
-        <h2 class="modal__title">{{ anime.title }}</h2>
-
         <div class="modal__image">
           <img :src="anime.bannerImage" alt="" />
         </div>
+        <h2 class="modal__title">{{ anime.title }}</h2>
         <div class="modal__meta">
-          <!-- TODO -->
-          <!-- Status scores -->
-          <!-- studios genre  -->
-          <!-- Date aired duration -->
           <div class="modal__status">Status: {{ anime.status }}</div>
           <div class="modal__score">
             Average Score: {{ anime.averageScore }}
@@ -21,12 +17,6 @@
           <div class="modal__date">Date aired: Oct 08, 2018 to ...</div>
           <div class="modal__duration">Duration: 23 min/ep</div>
         </div>
-        <!-- Add score here -->
-        <!-- TODO check if bannerImage is not NULL, else create new header add class modal without bannerImage -->
-        <!-- <div
-          class="modal__banner"
-          :style="{ backgroundImage: `url(${anime.bannerImage})` }"
-        ></div> -->
 
         <h3 class="modal__subtitle">Synopsis</h3>
         <p class="modal__synopsis"><span v-html="anime.synopsis"></span></p>
@@ -78,26 +68,32 @@ export default {
   // TODO customize the scroll bar
   overflow-y: auto;
 
-  &__title {
-    // margin-bottom: 0.7em;
-  }
+  // &__title {
+  //   // margin-bottom: 0.7em;
+  // }
 
   &__meta {
     display: grid;
     grid-template-columns: 1fr auto;
     font-size: 12px;
     color: #888;
-    div {
-      // margin-bottom: 0.6em;
-    }
+    margin-bottom: 1em;
+
+    // div {
+    //   // margin-bottom: 0.6em;
+    // }
+  }
+  &__subtitle {
+    font-size: inherit;
+    // margin-bottom: 0.1em;
+    // font-weight: inherit;
   }
 
-  // &__banner {
-  //   width: 100%;
-  //   background-size: 100% auto;
-  //   background-repeat: no-repeat;
-  //   height: 150px;
-  // }
+  &__synopsis {
+    line-height: 1.5em;
+    font-size: 13px;
+  }
+
   &__image {
     max-height: 25em;
     overflow: hidden;

@@ -1,10 +1,13 @@
 <template>
   <div class="anime-list">
-    <h2 class="anime-list__title">Top upcoming <span>spring anime</span></h2>
+    <h2 class="anime-list__title">{{ title }} <span>anime</span></h2>
     <div class="anime-list__container" v-if="animeList.length">
+      <!-- Default anime list -->
+      <!-- <div v-for="anime in animeList" :key="anime.id">
+        <AnimeListItem :anime="anime" />
+      </div> -->
       <div v-for="anime in animeList" :key="anime.id">
-        <!-- TODO create a card component inside AnimeItem component -->
-        <AnimeItem :anime="anime" />
+        <AnimeListItem :anime="anime" />
       </div>
     </div>
   </div>
@@ -12,22 +15,51 @@
 
 <script>
 // components
-import AnimeItem from "../animes/AnimeItem";
+import AnimeListItem from "../animes/AnimeListItem";
 // import BaseModal from "../bases/BaseDialog";
 
+// Composables
+import getAnimeList from "@/composables/getAnimeList";
+
 export default {
-  props: ["animeList"],
-  components: {
-    AnimeItem,
+  // TODO get props for filtering the anime list
+  // props: ["sortBy", "title", "year"],
+  props: {
+    sortBy: {
+      type: String,
+      required: false,
+    },
+    title: {
+      type: String,
+      required: false,
+    },
+    year: {
+      type: Number,
+      required: false,
+    },
   },
-  setup() {
-    // return { showModal, closeModal };
+  components: {
+    AnimeListItem,
+  },
+  setup(props) {
+    const date = new Date();
+    let year = parseInt(date.getFullYear());
+
+    if (props.year) {
+      year = parseInt(props.year);
+    }
+
+    const { animeList, fetchData } = getAnimeList(props.sortBy, year);
+    fetchData();
+
+    return { animeList };
   },
 };
 </script>
 
 <style lang="scss">
 .anime-list {
+  margin-bottom: 2.2em;
   &__title {
     padding: 45px 0;
     span {

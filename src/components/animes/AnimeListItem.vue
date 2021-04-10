@@ -24,8 +24,8 @@
       </div>
 
       <div class="card__schedule card__flex">
-        <div>Ep. {{ anime.currentEpisode }}/{{ anime.episodes }}</div>
-        <div class="card__time">Next. {{ anime.timeUntilAiring }}</div>
+        <div class="card__time">next. {{ anime.timeUntilAiring }}</div>
+        <div>ep. {{ anime.currentEpisode }} / {{ anime.episodes }}</div>
       </div>
     </div>
     <div class="card__footer">
@@ -43,7 +43,7 @@
 <script>
 // import { useRouter } from "vue-router";
 import { ref } from "vue";
-import BaseModal from "../bases/BaseDialog";
+import BaseModal from "../bases/BaseModal";
 
 export default {
   props: ["anime"],
@@ -85,16 +85,16 @@ export default {
 
 .card {
   background: white;
-  height: 384px;
+  height: 376px;
   height: 100%;
   display: grid;
   color: $primary-font;
-  // grid-template-rows: 240px 3fr 1fr;
-  grid-template-rows: 6fr 3fr 1fr;
+  grid-template-rows: 227px 98px 47px;
+  // grid-template-rows: 6fr 3fr 1fr;
 
   &:hover {
     cursor: pointer;
-    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+    // box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
 
     .card__image {
       filter: grayscale(0%);
@@ -109,6 +109,7 @@ export default {
   &__image {
     background-size: cover;
     filter: grayscale(40%);
+    margin-bottom: 0.5em;
   }
 
   // &__image {
@@ -145,7 +146,7 @@ export default {
       display: inline-block;
       margin-right: 4px;
       margin-bottom: 2px;
-      padding: 2px 4px;
+      padding: 2px 2px;
       border: 1px solid $secondary;
       border-radius: 45px;
       color: $light-grey;

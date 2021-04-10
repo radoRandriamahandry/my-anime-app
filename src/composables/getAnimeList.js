@@ -19,6 +19,10 @@ const validateEpisodes = (episodes) => {
   }
 };
 
+const validateScore = (score) => {
+  return score ? score : "NC";
+};
+
 // Get and validate NextAiringEpisode and current episode
 const getNextEpisodeInfo = (nextAiringEpisode) => {
   let currentEpisode;
@@ -34,45 +38,49 @@ const getNextEpisodeInfo = (nextAiringEpisode) => {
   return { currentEpisode, timeUntilAiring };
 };
 
-// Vairables for page info
-const variables = {
-  page: 1,
-  perPage: 8,
-};
+// Variables for page info
 
-const query = `
-query ($page: Int, $perPage: Int) {
-  Page (page: $page, perPage: $perPage) {
-    media (type: ANIME, sort: SCORE_DESC, season: SPRING, seasonYear: 2021) {
-      id
-      title {
-        romaji
+const getAnimeList = (sortBy, year, perPage = 4) => {
+  // TODO Make number perPage a variable
+  const variables = {
+    page: 1,
+    perPage: perPage,
+    seasonYear: year,
+    sort: sortBy,
+  };
+
+  // TODO create a variable for sort
+  const query = `
+    query ($page: Int, $perPage: Int, $seasonYear: Int, $sort: [MediaSort]) {
+      Page (page: $page, perPage: $perPage) {
+        media (type: ANIME, sort: $sort, season: SPRING, seasonYear: $seasonYear) {
+          id
+          title {
+            romaji
+          }
+          description
+          coverImage {
+            extraLarge
+          }
+          bannerImage
+          episodes
+          genres
+          duration
+          format
+          nextAiringEpisode {
+            episode
+            timeUntilAiring
+          }
+          averageScore
+          status
+        }
       }
-      description
-      coverImage {
-        extraLarge
-      }
-      bannerImage
-      episodes
-      genres
-      duration
-      format
-      nextAiringEpisode {
-        episode
-        timeUntilAiring
-      }
-      averageScore
-      status
     }
-  }
-}
-`;
+    `;
 
-const url = "https://graphql.anilist.co";
+  const url = "https://graphql.anilist.co";
+  const animeList = ref([]);
 
-const animeList = ref([]);
-
-const getAnimeList = () => {
   const fetchData = async () => {
     try {
       const res = await axios.post(url, {
@@ -100,7 +108,7 @@ const getAnimeList = () => {
           episodes: validateEpisodes(anime.episodes),
           currentEpisode: currentEpisode,
           timeUntilAiring: timeUntilAiring,
-          averageScore: anime.averageScore,
+          averageScore: validateScore(anime.averageScore),
           // TODO check all available status and format it
           status: anime.status,
         };
