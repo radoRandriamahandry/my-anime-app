@@ -1,19 +1,20 @@
 <template>
   <!-- Get the cover image first -->
-  <!-- TODO check if animeList is not null -->
   <div id="slider">
-    <div v-for="(anime, index) in animeList" :key="anime.id">
-      <!-- <transition :name="transitionName" mode="out-in"> -->
-      <AnimeCarouselItem
-        :index="index"
-        :activeSlide="activeSlide"
-        :transitionName="transitionName"
-        class="slider__content"
-      />
-      <!-- </transition> -->
+    <div v-if="animeList">
+      <div class="slide__wrapper">
+        <div v-for="(anime, index) in animeList" :key="anime.id">
+          <AnimeCarouselItem
+            :index="index"
+            :activeSlide="activeSlide"
+            :transitionName="transitionName"
+            :anime="anime"
+          />
+        </div>
+      </div>
+      <!--TODO Add another slide here -->
     </div>
   </div>
-  <!-- </div> -->
 
   <button @click="updateActiveSlide('previous')">Previous slide</button>
   <button @click="updateActiveSlide('next')">Next slide</button>
@@ -102,23 +103,27 @@ export default {
 <style lang="scss" scoped>
 #slider {
   width: 100%;
-  position: relative;
-  height: 200px;
+  // position: relative;
+  height: 550px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  // background: white;
+  background: black;
 }
-.slider__content {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  // padding: 10px;
+
+.slide__wrapper {
+  background: red;
+  padding: 250px;
+  height: 80%;
+  width: 50%;
+  position: relative;
+  overflow: hidden;
+
+  // display: flex;
+  // flex-wrap: nowrap;
+  // flex-direction: row;
+  // align-items: center;
+  // justify-content: center;
+  // gap: 0px;
 }
 </style>

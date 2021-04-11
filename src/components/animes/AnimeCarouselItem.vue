@@ -1,11 +1,18 @@
 <template>
   <transition :name="transitionName" mode="out-in">
+    <!-- <transition :name="transitionName"> -->
     <div
       v-if="isActive"
       :class="{ active: isActive, inactive: !isActive }"
       class="slide"
     >
-      <div class="slide__content">Anime carousel item {{ index }}</div>
+      <!-- TODO create anime slite component using slot -->
+      <div class="slide__content">
+        <!-- {{ anime.title }} -->
+        <div class="slide__coverimage">
+          <img :src="anime.imageUrl" alt="" />
+        </div>
+      </div>
     </div>
   </transition>
 </template>
@@ -14,6 +21,10 @@
 import { onBeforeUpdate, ref } from "vue";
 export default {
   props: {
+    anime: {
+      type: Object,
+      required: true,
+    },
     index: {
       type: Number,
       required: true,
@@ -28,12 +39,6 @@ export default {
   },
   setup(props) {
     const isActive = ref(false);
-    // const myTransition = ref(null);
-    // if (props.transitionName) {
-    //   myTransition.value = props.transitionName;
-    // } else {
-    //   myTransition.value = "fade";
-    // }
 
     if (props.index == props.activeSlide) {
       isActive.value = true;
@@ -53,12 +58,10 @@ export default {
 
 <style lang="scss" scoped>
 // Transition animation
-// Transition animation
 .fade-enter-from {
   opacity: 0;
 }
 .fade-enter-to {
-  // transform: translateX(0px);
   opacity: 1;
 }
 .fade-enter-active {
@@ -71,14 +74,14 @@ export default {
 }
 
 .slide-next-enter-from {
-  transform: translate(100%);
+  transform: translateX(100%);
 }
 .slide-next-enter-to {
-  transform: translate(0%);
+  transform: translateX(0%);
 }
 
 .slide-next-leave-to {
-  transform: translate(-100%);
+  transform: translateX(-100%);
 }
 
 // GO TO PREVIOUS SLIDE
@@ -88,30 +91,45 @@ export default {
 }
 
 .slide-prev-enter-from {
-  transform: translate(-100%);
+  transform: translateX(-100%);
 }
 
 .slide-prev-enter-to {
-  transform: translate(0%);
+  transform: translateX(0%);
 }
 
 .slide-prev-leave-to {
-  transform: translate(100%);
-}
-
-.inactive {
-  display: none;
+  transform: translateX(100%);
 }
 
 .slide {
-  background: #555;
+  background: #333;
   color: white;
-  // width: 60%;
-  // margin: 0 10px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  margin-left: -50%;
+  top: 50%;
+  margin-top: -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &__content {
-    padding: 50px;
-    text-align: center;
+    // padding: 50px;
+    // text-align: center;
+    width: 100%;
+    // margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__image {
+    // background-size: cover;
+    image {
+      object-fit: cover;
+    }
   }
 }
 </style>

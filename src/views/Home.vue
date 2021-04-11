@@ -1,9 +1,9 @@
 <template>
+  <AnimeCarousel />
   <div class="container">
     <!-- TODO create a carrousel -->
     <!-- TODO move animelist component here and add slot and props to filter the list -->
     <!-- <AnimeList :sortBy="sortByList.udpate" title="Most Recent" /> -->
-    <AnimeCarousel />
     <AnimeList
       :sortBy="sortByList.popularity"
       :year="year"
