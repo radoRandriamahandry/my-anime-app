@@ -18,7 +18,7 @@
 <script>
 // Components
 import AnimeList from "../components/animes/AnimeList";
-import AnimeCarousel from "../components/animes/AnimeCarousel";
+// import AnimeCarousel from "../components/animes/AnimeCarousel";
 
 import { ref } from "vue";
 
@@ -26,7 +26,7 @@ export default {
   name: "Home",
   components: {
     AnimeList,
-    AnimeCarousel,
+    // AnimeCarousel,
   },
   setup() {
     // TODO create a filter for the getAnimeList(popular)
@@ -51,4 +51,4 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style></style>

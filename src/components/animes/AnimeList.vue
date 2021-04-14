@@ -72,26 +72,22 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .anime-list {
   margin-bottom: 2.2em;
-  &__title {
-    padding: 45px 0;
-    span {
-      font-weight: 100;
-    }
-  }
-
-  &__container {
-    overflow: hidden;
-    // display: grid;
-    // grid-template-columns: repeat(auto-fill, minmax(236px, 1fr));
-    // justify-content: space-between;
-    // gap: 40px 20px;
-  }
 }
 
-// Swiper Style
+.anime-list__title {
+  padding: 45px 0;
+}
+.anime-list__title span {
+  font-weight: 100;
+}
+.anime-list__container {
+  overflow: hidden;
+}
+
+/* // Swiper Style */
 .swiper-button-prev,
 .swiper-button-next {
   position: relative;

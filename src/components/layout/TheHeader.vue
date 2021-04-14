@@ -23,8 +23,8 @@
 export default {};
 </script>
 
-<style lang="scss">
-@import "@/styles/abstracts/colors";
+<style>
+/* // @import "@/styles/abstracts/colors"; */
 
 .navbar {
   background: white;
@@ -34,41 +34,40 @@ export default {};
   justify-content: space-between;
   vertical-align: middle;
   line-height: 70px;
+}
+.navbar__title {
+  margin-left: 30px;
+  font-weight: bold;
+}
+.navbar__title a {
+  color: var(--primary-font);
+}
 
-  &__title {
-    margin-left: 30px;
-    font-weight: bold;
-    a {
-      color: $primary-font;
-    }
-  }
-  &__links {
-    // font-weight: lighter;
-    display: flex;
+.navbar__links {
+  /* // font-weight: lighter; */
+  display: flex;
 
-    // line-height: 70px;
-    // gap: 30px;
-  }
+  /* // line-height: 70px; */
+  /* // gap: 30px; */
+}
 
-  &__links-item {
-    list-style: none;
-    height: 100%;
-    padding: 0 30px;
-    // letter-spacing: 3px;
-    font-weight: 400;
+.navbar__links-item {
+  list-style: none;
+  height: 100%;
+  padding: 0 30px;
+  /* // letter-spacing: 3px; */
+  font-weight: 400;
+}
+.navbar__links-item a {
+  color: var(--primary-font);
+  text-transform: uppercase;
+}
 
-    a {
-      color: $primary-font;
-      text-transform: uppercase;
-    }
-
-    &--button {
-      background: $clr-primary;
-      a {
-        color: white;
-        text-transform: uppercase;
-      }
-    }
-  }
+.navbar__links-item--button {
+  background: var(--clr-primary);
+}
+navbar__links-item--button a {
+  color: white;
+  text-transform: uppercase;
 }
 </style>

@@ -56,8 +56,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-// Transition animation
+<style scoped>
+/* // Transition animation */
 .fade-enter-from {
   opacity: 0;
 }
@@ -67,7 +67,7 @@ export default {
 .fade-enter-active {
   transition: opacity 1s;
 }
-// GO TO NEXT SLIDE
+/* // GO TO NEXT SLIDE */
 .slide-next-enter-active,
 .slide-next-leave-active {
   transition: transform 0.5s ease-in-out;
@@ -84,7 +84,7 @@ export default {
   transform: translateX(-100%);
 }
 
-// GO TO PREVIOUS SLIDE
+/* // GO TO PREVIOUS SLIDE */
 .slide-prev-enter-active,
 .slide-prev-leave-active {
   transition: transform 0.5s ease-in-out;
@@ -115,21 +115,15 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  &__content {
-    // padding: 50px;
-    // text-align: center;
-    width: 100%;
-    // margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  &__image {
-    // background-size: cover;
-    image {
-      object-fit: cover;
-    }
-  }
+}
+.slide__content {
+  width: 100%;
+  /* // margin: 0 auto; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.slide__image image {
+  object-fit: cover;
 }
 </style>

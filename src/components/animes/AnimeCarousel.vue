@@ -100,10 +100,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 #slider {
   width: 100%;
-  // position: relative;
+  /* // position: relative; */
   height: 550px;
   display: flex;
   align-items: center;
@@ -118,12 +118,12 @@ export default {
   width: 50%;
   position: relative;
   overflow: hidden;
-
+  /* 
   // display: flex;
   // flex-wrap: nowrap;
   // flex-direction: row;
   // align-items: center;
   // justify-content: center;
-  // gap: 0px;
+  // gap: 0px; */
 }
 </style>

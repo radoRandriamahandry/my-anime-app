@@ -47,7 +47,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .backdrop {
   top: 0;
   position: fixed;
@@ -57,7 +57,7 @@ export default {
   z-index: 10;
   display: grid;
   place-content: center;
-  // overflow-y: auto;
+  /* // overflow-y: auto; */
 }
 .modal {
   width: 60%;
@@ -65,47 +65,46 @@ export default {
   background: white;
   margin: auto;
   max-height: 98vh;
-  // TODO customize the scroll bar
+  /* // TODO customize the scroll bar */
   overflow-y: auto;
-
-  // &__title {
+}
+/* // &__title {
   //   // margin-bottom: 0.7em;
-  // }
+  // } */
 
-  &__meta {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 1em;
+.modal__meta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 1em;
 
-    // div {
+  /* // div {
     //   // margin-bottom: 0.6em;
-    // }
-  }
-  &__subtitle {
-    font-size: inherit;
-    // margin-bottom: 0.1em;
-    // font-weight: inherit;
-  }
+    // } */
+}
+.modal__subtitle {
+  font-size: inherit;
+  /* // margin-bottom: 0.1em;
+    // font-weight: inherit; */
+}
 
-  &__synopsis {
-    line-height: 1.5em;
-    font-size: 13px;
-  }
+.modal__synopsis {
+  line-height: 1.5em;
+  font-size: 13px;
+}
 
-  &__image {
-    max-height: 25em;
-    overflow: hidden;
-    // margin: 1em 0;
-    margin-bottom: 0.7em;
-    img {
-      width: 100%;
-      object-fit: cover;
-      object-position: top;
-      // remove white space after image
-      display: block;
-    }
-  }
+.modal__image {
+  max-height: 25em;
+  overflow: hidden;
+  /* // margin: 1em 0; */
+  margin-bottom: 0.7em;
+}
+.modal__image img {
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
+  /* // remove white space after image */
+  display: block;
 }
 </style>
