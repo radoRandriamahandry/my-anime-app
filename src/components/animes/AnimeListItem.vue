@@ -8,13 +8,13 @@
       :anime="animeDetails"
       @close="closeModal"
     />
-
     <div
       class="card__image"
       :style="{ backgroundImage: `url(${anime.imageUrl})` }"
     ></div>
     <div class="card__info">
       <div class="card__title">{{ anime.title }}</div>
+
       <div class="card__genre">
         <ul>
           <li v-for="genre in anime.genres" :key="genre">
@@ -28,13 +28,11 @@
         <div>ep. {{ anime.currentEpisode }} / {{ anime.episodes }}</div>
       </div>
     </div>
-    <div class="card__footer">
-      <div class="card__flex">
-        <div class="card__status">{{ anime.status }}</div>
-        <div class="card__score">
-          Score :
-          <span class="card__score--number">{{ anime.averageScore }}</span>
-        </div>
+    <div class="card__footer card__flex">
+      <div class="card__status">{{ anime.status }}</div>
+      <div class="card__score">
+        Score :
+        <span class="card__score--number">{{ anime.averageScore }}</span>
       </div>
     </div>
   </div>
@@ -52,13 +50,6 @@ export default {
   },
 
   setup(props) {
-    // const router = useRouter();
-
-    // const gotoAnimeDetails = (id) => {
-    // TODO check if on mobile then redirect to a page else use popup
-    // router.push({ name: "AnimeDetails", params: { id: id } });
-    // };
-
     const animeDetails = ref();
     animeDetails.value = { ...props.anime };
 

@@ -1,5 +1,5 @@
 <template>
-  <AnimeCarousel />
+  <!-- <AnimeCarousel /> -->
   <div class="container">
     <!-- TODO create a carrousel -->
     <!-- TODO move animelist component here and add slot and props to filter the list -->
