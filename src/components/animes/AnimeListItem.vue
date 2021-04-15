@@ -8,21 +8,45 @@
       :anime="animeDetails"
       @close="closeModal"
     />
-    <div
-      class="card__image"
-      :style="{ backgroundImage: `url(${anime.imageUrl})` }"
-    ></div>
-    <div class="card__info">
-      <div class="card__title">{{ anime.title }}</div>
 
-      <div class="card__genre">
-        <ul>
-          <li v-for="genre in anime.genres" :key="genre">
-            {{ genre }}
-          </li>
-        </ul>
-      </div>
+    <!-- Base Card Start -->
+    <BaseCard>
+      <template v-slot:image>
+        <img :src="anime.imageUrl" class="transition duration-500" />
+      </template>
 
+      <template v-slot:title>
+        <div>{{ anime.title }}</div>
+      </template>
+
+      <template v-slot:footer>
+        <div class="grid grid-cols-2">
+          <div class="font-bold text-secondary-300 text-sm lowercase">
+            {{ anime.status }}
+          </div>
+          <div class="text-secondary-400 text-xs text-right  ">
+            <span>Score :</span>
+            <span class="font-bold text-primary text-sm ">{{
+              anime.averageScore
+            }}</span>
+          </div>
+        </div>
+      </template>
+    </BaseCard>
+
+    <!-- Insert at hover -->
+    <!-- <ul>
+      <li
+        class="inline-block mr-1 px-1 text-xs text-gray-400 border rounded-xl  border-gray-400"
+        v-for="genre in anime.genres"
+        :key="genre"
+      >
+        {{ genre }}
+      </li>
+    </ul> -->
+
+    <!-- <div class="card__info">
+      <div class="card__genre"></div>
       <div class="card__schedule card__flex">
         <div class="card__time">next. {{ anime.timeUntilAiring }}</div>
         <div>ep. {{ anime.currentEpisode }} / {{ anime.episodes }}</div>
@@ -34,7 +58,7 @@
         Score :
         <span class="card__score--number">{{ anime.averageScore }}</span>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -42,11 +66,13 @@
 // import { useRouter } from "vue-router";
 import { ref } from "vue";
 import BaseModal from "../bases/BaseModal";
+import BaseCard from "../bases/BaseCard";
 
 export default {
   props: ["anime"],
   components: {
     BaseModal,
+    BaseCard,
   },
 
   setup(props) {
@@ -74,18 +100,16 @@ export default {
 /* @import "@/styles/abstracts/fonts"; */
 /* @import "@/styles/abstracts/colors"; */
 
-.card {
+/* .card {
   background: white;
   height: 376px;
   height: 100%;
   display: grid;
   color: var(--primary-font);
   grid-template-rows: 227px 98px 47px;
-  /* // grid-template-rows: 6fr 3fr 1fr; */
-}
-.card:hover {
+} */
+/* .card:hover {
   cursor: pointer;
-  /* // box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1); */
 }
 .card:hover .card__image {
   filter: grayscale(0%);
@@ -102,17 +126,7 @@ export default {
   margin-bottom: 0.5em;
 }
 
-/* // .card__image {
-  //   width: 100%;
-  //   height: auto;
-  //   max-width: 491px;
-  //   max-height: 352px;
-  //   display: block;
-  //   overflow: hidden;
-  //   object-fit: cover;
-  //   object-position: top;
-  //   overflow: hidden;
-  // } */
+
 
 .card__info {
   font-size: var(--font-size);
@@ -161,5 +175,5 @@ export default {
 
 .card__footer__score--number {
   font-weight: bold;
-}
+} */
 </style>
