@@ -4,9 +4,9 @@
     <!-- TODO create a carrousel -->
     <!-- TODO move animelist component here and add slot and props to filter the list -->
     <!-- <AnimeList :sortBy="sortByList.udpate" title="Most Recent" /> -->
-    <SearchBar @focusOnSearch="search" />
+    <SearchBar @searchValueChanged="getFilteredResult" />
 
-    <div v-if="!searchActive">
+    <div v-show="!searchActive">
       <AnimeList
         :sortBy="sortByList.popularity"
         :year="year"
@@ -15,6 +15,14 @@
       <AnimeList :sortBy="sortByList.trend" title="Most Trending" />
       <AnimeList :sortBy="sortByList.favourites" title="Users Favourites" />
     </div>
+    <div v-if="searchActive">
+      <SearchResult
+        :searchResult="searchResult"
+        :searchValue="searchValue"
+        :filteredAnime="filteredAnime"
+        :isLoading="isLoading"
+      />
+    </div>
   </div>
 </template>
 
@@ -22,21 +30,22 @@
 // Components
 import AnimeList from "../components/animes/AnimeList";
 import SearchBar from "../components/SearchBar";
+import SearchResult from "../components/animes/SearchResult";
 // import AnimeCarousel from "../components/animes/AnimeCarousel";
 
-import { ref } from "vue";
+import getFilteredAnime from "@/composables/getFilteredAnime";
+
+import { computed, ref } from "vue";
 
 export default {
   name: "Home",
   components: {
     AnimeList,
     SearchBar,
+    SearchResult,
   },
   setup() {
     // TODO create a filter for the getAnimeList(popular)
-    // const { animeList, fetchData } = getAnimeList("SCORE_DESC");
-    // fetchData();
-    // return { animeList };
 
     // Get the current year
     const date = new Date();
@@ -51,14 +60,50 @@ export default {
     };
 
     // Manage Search bar
-    const searchActive = ref(false);
+    const searchValue = ref("");
 
-    const search = () => {
-      console.log("Focus on live search");
-      searchActive.value = true;
+    // Conditionnal DISPLAY of animeList or SearchResult
+    // When the searchValue is not empty show search Result
+    const searchActive = computed(() => {
+      if (searchValue.value === "") {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
+    // Fetch filter result
+    const searchResult = ref([]);
+    const { isLoading, animeList, fetchData } = getFilteredAnime();
+
+    const filteredAnime = computed(() => {
+      if (animeList.value.length) {
+        return animeList.value;
+      } else {
+        return [];
+      }
+    });
+
+    const getFilteredResult = async (value) => {
+      searchValue.value = value;
+
+      // Add getFitleredAnime request here
+      animeList.value = [];
+      await fetchData(value);
+      console.log(filteredAnime.value);
     };
+    // Create computed property that get the result of getFilteredAnime
 
-    return { sortByList, year, search, searchActive };
+    return {
+      sortByList,
+      year,
+      searchActive,
+      searchValue,
+      getFilteredResult,
+      searchResult,
+      filteredAnime,
+      isLoading,
+    };
   },
 };
 </script>

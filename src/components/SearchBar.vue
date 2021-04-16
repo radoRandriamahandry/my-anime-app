@@ -4,20 +4,22 @@
       class="w-1/4 border-b border-secondary-300 text-center outline-none p-1"
       type="text"
       placeholder="Live search"
-      @focus="searchFocus"
+      v-model="inputValue"
     />
   </div>
 </template>
 
 <script>
-export default {
-  setup(props, context) {
-    const searchFocus = () => {
-      // console.log("Focus on live search");
-      context.emit("focusOnSearch");
-    };
+import { watch, ref } from "vue";
 
-    return { searchFocus };
+export default {
+  setup(_, context) {
+    const inputValue = ref("");
+    watch(inputValue, () => {
+      context.emit("searchValueChanged", inputValue.value);
+    });
+
+    return { inputValue };
   },
 };
 </script>

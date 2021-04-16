@@ -43,7 +43,7 @@ export default {
       type: String,
     },
     score: {
-      type: Number,
+      required: false,
     },
   },
 };
