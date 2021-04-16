@@ -15,7 +15,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      textAlign: ["even", "odd"],
+    },
   },
   plugins: [],
 };

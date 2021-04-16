@@ -2,24 +2,43 @@
   <teleport to="body">
     <!-- TODO import characters -->
     <div v-if="showModal" class="backdrop" @click.self="tryClose">
-      <div class="modal">
-        <div class="modal__image">
-          <img :src="anime.bannerImage" alt="" />
-        </div>
-        <h2 class="modal__title">{{ anime.title }}</h2>
-        <div class="modal__meta">
-          <div class="modal__status">Status: {{ anime.status }}</div>
-          <div class="modal__score">
-            Average Score: {{ anime.averageScore }}
-          </div>
-          <div class="modal__studios">Studios: Ghibli, Ufotable</div>
-          <div class="modal__score">Genre: Action, Aventure, Historical</div>
-          <div class="modal__date">Date aired: Oct 08, 2018 to ...</div>
-          <div class="modal__duration">Duration: 23 min/ep</div>
+      <div class="modal rounded-lg overflow-hidden">
+        <div class="max-h-96 overflow-hidden">
+          <img class="block" :src="anime.bannerImage" alt="" />
         </div>
 
-        <h3 class="modal__subtitle">Synopsis</h3>
-        <p class="modal__synopsis"><span v-html="anime.synopsis"></span></p>
+        <div class="p-8 pt-4">
+          <h2 class="font-bold">{{ anime.title }}</h2>
+          <div class="grid grid-cols-3 text-xs text-secondary-400 mb-4">
+            <!-- <div class="grid grid-cols-2 text-xs text-secondary-400 mb-4"> -->
+            <div class="">
+              <span class="font-bold">Genre:</span> Action, Aventure, Historical
+            </div>
+            <div class="">
+              <span class="font-bold">Studios:</span> Ghibli, Ufotable
+            </div>
+            <div class="">
+              <span class="font-bold">Date aired:</span> Oct 08, 2018 to ...
+            </div>
+            <div class="">
+              <span class="font-bold">Status: </span>
+              <span class="text-primary">{{ anime.status }}</span>
+            </div>
+            <div class="">
+              <span class="font-bold">Duration:</span> 23 min/ep
+            </div>
+            <div class="">
+              <span class="font-bold">Score: </span>
+              <span class="text-primary ">{{ anime.averageScore }}</span>
+            </div>
+          </div>
+          <h3 class="font-bold">Synopsis</h3>
+          <p class="leading-6 text-sm"><span v-html="anime.synopsis"></span></p>
+          <h3 class="font-bold mt-4 mb-2">Trailer</h3>
+          <div class="iframe__container">
+            <iframe :title="anime.title" :src="anime.videoTrailer"></iframe>
+          </div>
+        </div>
       </div>
     </div>
   </teleport>
@@ -42,12 +61,28 @@ export default {
     const tryClose = () => {
       context.emit("close");
     };
+
     return { tryClose };
   },
 };
 </script>
 
 <style scoped>
+.iframe__container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.iframe__container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .backdrop {
   top: 0;
   position: fixed;
@@ -61,7 +96,7 @@ export default {
 }
 .modal {
   width: 60%;
-  padding: 20px;
+  /* padding: 20px; */
   background: white;
   margin: auto;
   max-height: 98vh;
@@ -78,28 +113,8 @@ export default {
   font-size: 12px;
   color: #888;
   margin-bottom: 1em;
-
-  /* // div {
-    //   // margin-bottom: 0.6em;
-    // } */
-}
-.modal__subtitle {
-  font-size: inherit;
-  /* // margin-bottom: 0.1em;
-    // font-weight: inherit; */
 }
 
-.modal__synopsis {
-  line-height: 1.5em;
-  font-size: 13px;
-}
-
-.modal__image {
-  max-height: 25em;
-  overflow: hidden;
-  /* // margin: 1em 0; */
-  margin-bottom: 0.7em;
-}
 .modal__image img {
   width: 100%;
   object-fit: cover;

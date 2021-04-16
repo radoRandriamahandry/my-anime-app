@@ -3,36 +3,15 @@
 
   <!-- <div class="card" @click="gotoAnimeDetails(anime.id)"> -->
   <div class="card" @click="handleModalDisplay">
-    <BaseModal
-      :showModal="showModal"
-      :anime="animeDetails"
-      @close="closeModal"
-    />
+    <BaseModal :showModal="showModal" :anime="anime" @close="closeModal" />
 
     <!-- Base Card Start -->
-    <BaseCard>
-      <template v-slot:image>
-        <img :src="anime.imageUrl" class="transition duration-500" />
-      </template>
-
-      <template v-slot:title>
-        <div>{{ anime.title }}</div>
-      </template>
-
-      <template v-slot:footer>
-        <div class="grid grid-cols-2">
-          <div class="font-bold text-secondary-300 text-sm lowercase">
-            {{ anime.status }}
-          </div>
-          <div class="text-secondary-400 text-xs text-right  ">
-            <span>Score :</span>
-            <span class="font-bold text-primary text-sm ">{{
-              anime.averageScore
-            }}</span>
-          </div>
-        </div>
-      </template>
-    </BaseCard>
+    <BaseCard
+      :imageUrl="anime.imageUrl"
+      :title="anime.title"
+      :status="anime.status"
+      :score="anime.averageScore"
+    />
 
     <!-- Insert at hover -->
     <!-- <ul>
@@ -75,9 +54,9 @@ export default {
     BaseCard,
   },
 
-  setup(props) {
-    const animeDetails = ref();
-    animeDetails.value = { ...props.anime };
+  setup() {
+    // const animeDetails = ref();
+    // animeDetails.value = { ...props.anime };
 
     // Manage Modal Display
     const showModal = ref(false);
@@ -91,7 +70,7 @@ export default {
       document.body.classList.add("modal-open");
     };
 
-    return { animeDetails, showModal, closeModal, handleModalDisplay };
+    return { showModal, closeModal, handleModalDisplay };
   },
 };
 </script>

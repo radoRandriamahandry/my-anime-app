@@ -10,6 +10,10 @@ const formatDate = (seconds) => {
   return format(helperDate, "do E, HH:mm");
 };
 
+const formatTrailerUrl = (trailerID) => {
+  return `https://www.youtube.com/embed/${trailerID}`;
+};
+
 // Validate data
 const validateEpisodes = (episodes) => {
   if (episodes) {
@@ -73,6 +77,11 @@ const getAnimeList = (sortBy, year, perPage = 4) => {
           }
           averageScore
           status
+          trailer {
+            id
+            site
+            thumbnail
+          }
         }
       }
     }
@@ -111,6 +120,7 @@ const getAnimeList = (sortBy, year, perPage = 4) => {
           averageScore: validateScore(anime.averageScore),
           // TODO check all available status and format it
           status: anime.status,
+          videoTrailer: formatTrailerUrl(anime.trailer.id),
         };
 
         animeList.value.push(tempAnime);
