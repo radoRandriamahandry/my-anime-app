@@ -1,16 +1,19 @@
 <template>
   <!-- <button @click="updateActiveSlideListIndex('prev')">prev</button> -->
   <!-- <button @click="updateActiveSlideListIndex('next')">next</button> -->
+
   <div class="anime-list">
     <h2 class="anime-list__title">{{ title }} <span>anime</span></h2>
-    <div class="anime-list__container" v-if="animeList.length">
-      <!-- <splide :options="options"> -->
-      <!-- <splide-slide v-for="anime in animeList" :key="anime.id"> -->
-      <div v-for="anime in animeList" :key="anime.id">
-        <AnimeListItem :anime="anime" />
+
+    <!-- TODO create a spinner -->
+    <div v-if="isLoading">Loading data...</div>
+
+    <div v-if="!isLoading">
+      <div class="anime-list__container" v-if="animeList.length">
+        <div v-for="anime in animeList" :key="anime.id">
+          <AnimeListItem :anime="anime" />
+        </div>
       </div>
-      <!-- </splide-slide> -->
-      <!-- </splide> -->
     </div>
   </div>
 </template>
@@ -66,10 +69,10 @@ export default {
     if (props.year) {
       year = parseInt(props.year);
     }
-    const { animeList, fetchData } = getAnimeList(props.sortBy, year);
-    fetchData();
+    const { isLoading, animeList, fetchData } = getAnimeList();
+    fetchData(props.sortBy, year);
 
-    return { animeList, options };
+    return { isLoading, animeList, options };
   },
 };
 </script>

@@ -15,6 +15,7 @@
       <AnimeList :sortBy="sortByList.trend" title="Most Trending" />
       <AnimeList :sortBy="sortByList.favourites" title="Users Favourites" />
     </div>
+
     <div v-if="searchActive">
       <SearchResult
         :searchResult="searchResult"
@@ -31,9 +32,13 @@
 import AnimeList from "../components/animes/AnimeList";
 import SearchBar from "../components/SearchBar";
 import SearchResult from "../components/animes/SearchResult";
+
+// Composables
+import getAnimeList from "@/composables/getAnimeList";
+
 // import AnimeCarousel from "../components/animes/AnimeCarousel";
 
-import getFilteredAnime from "@/composables/getFilteredAnime";
+// import getFilteredAnime from "@/composables/getFilteredAnime";
 
 import { computed, ref } from "vue";
 
@@ -72,9 +77,16 @@ export default {
       }
     });
 
-    // Fetch filter result
+    // START Fetch filter result
     const searchResult = ref([]);
-    const { isLoading, animeList, fetchData } = getFilteredAnime();
+    const { isLoading, animeList, fetchData } = getAnimeList();
+
+    const getFilteredResult = async (value) => {
+      searchValue.value = value;
+
+      animeList.value = [];
+      fetchData("POPULARITY_DESC", year, 10, value);
+    };
 
     const filteredAnime = computed(() => {
       if (animeList.value.length) {
@@ -83,16 +95,7 @@ export default {
         return [];
       }
     });
-
-    const getFilteredResult = async (value) => {
-      searchValue.value = value;
-
-      // Add getFitleredAnime request here
-      animeList.value = [];
-      await fetchData(value);
-      console.log(filteredAnime.value);
-    };
-    // Create computed property that get the result of getFilteredAnime
+    // END
 
     return {
       sortByList,
