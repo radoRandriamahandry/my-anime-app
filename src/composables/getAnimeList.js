@@ -78,10 +78,20 @@ const getNextEpisodeInfo = (nextAiringEpisode) => {
 
 const getAnimeList = () => {
   // TODO Make number perPage a variable
+  let cancelToken;
   const animeList = ref([]);
   const isLoading = ref(false);
 
   const fetchData = async (sortBy, year, perPage = 4, searchValue) => {
+    //Check if there are any previous pending requests
+
+    if (typeof cancelToken != typeof undefined) {
+      cancelToken.cancel("Operation canceled due to new request.");
+    }
+
+    //Save the cancel token for the current request
+    cancelToken = axios.CancelToken.source();
+
     const url = "https://graphql.anilist.co";
 
     let variables;
@@ -159,6 +169,7 @@ const getAnimeList = () => {
       const res = await axios.post(url, {
         query: query,
         variables: variables,
+        cancelToken: cancelToken.token,
       });
 
       // Temporary animeList for formatting the final animeList

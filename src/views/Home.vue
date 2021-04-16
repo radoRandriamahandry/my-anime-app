@@ -12,7 +12,11 @@
         :year="year"
         title="Most Popular"
       />
-      <AnimeList :sortBy="sortByList.trend" title="Most Trending" />
+      <AnimeList
+        :sortBy="sortByList.trend"
+        title="Most Trending"
+        :perPage="16"
+      />
       <AnimeList :sortBy="sortByList.favourites" title="Users Favourites" />
     </div>
 
@@ -82,10 +86,11 @@ export default {
     const { isLoading, animeList, fetchData } = getAnimeList();
 
     const getFilteredResult = async (value) => {
-      searchValue.value = value;
-
       animeList.value = [];
-      fetchData("POPULARITY_DESC", year, 10, value);
+      if (value !== "") {
+        await fetchData("POPULARITY_DESC", year, 10, value);
+      }
+      searchValue.value = value;
     };
 
     const filteredAnime = computed(() => {

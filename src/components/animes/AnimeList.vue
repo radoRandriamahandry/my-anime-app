@@ -28,7 +28,6 @@ import AnimeListItem from "../animes/AnimeListItem";
 
 // Composables
 import getAnimeList from "@/composables/getAnimeList";
-import { reactive } from "vue";
 
 export default {
   components: {
@@ -51,17 +50,13 @@ export default {
       type: Number,
       required: false,
     },
+    perPage: {
+      type: [Number, String],
+      required: false,
+    },
   },
 
   setup(props) {
-    // SPLIDE
-    const options = reactive({
-      rewind: true,
-      perPage: 4,
-      width: "100%",
-      gap: "1rem",
-    });
-
     // Start fetching the anime list
     const date = new Date();
     let year = parseInt(date.getFullYear());
@@ -70,9 +65,14 @@ export default {
       year = parseInt(props.year);
     }
     const { isLoading, animeList, fetchData } = getAnimeList();
-    fetchData(props.sortBy, year);
+    if (props.perPage) {
+      fetchData(props.sortBy, year, parseInt(props.perPage));
+    }
+    if (!props.perPage) {
+      fetchData(props.sortBy, year);
+    }
 
-    return { isLoading, animeList, options };
+    return { isLoading, animeList };
   },
 };
 </script>
