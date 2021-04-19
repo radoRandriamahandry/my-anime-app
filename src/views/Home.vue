@@ -4,7 +4,11 @@
     <!-- TODO create a carrousel -->
     <!-- TODO move animelist component here and add slot and props to filter the list -->
     <!-- <AnimeList :sortBy="sortByList.udpate" title="Most Recent" /> -->
-    <SearchBar @searchValueChanged="getFilteredResult" />
+
+    <SearchBar
+      @searchValueChanged="handleSearchValueChange"
+      :searchValue="searchValue"
+    />
 
     <div v-show="!searchActive">
       <AnimeList
@@ -22,7 +26,6 @@
 
     <div v-if="searchActive">
       <SearchResult
-        :searchResult="searchResult"
         :searchValue="searchValue"
         :filteredAnime="filteredAnime"
         :isLoading="isLoading"
@@ -75,33 +78,23 @@ export default {
     // Conditionnal DISPLAY of animeList or SearchResult
     // When the searchValue is not empty show search Result
     const searchActive = computed(() => {
-      if (searchValue.value === "") {
-        return false;
-      } else {
-        return true;
-      }
+      return searchValue.value == "" ? false : true;
     });
 
     // START Fetch filter result
-    const searchResult = ref([]);
     const { isLoading, animeList, fetchData } = searchAnimeList();
 
-    const getFilteredResult = async (value) => {
-      animeList.value = [];
-      if (value !== "") {
-        await fetchData("POPULARITY_DESC", year, 10, value);
-        searchValue.value = value;
+    const handleSearchValueChange = async (searchParam) => {
+      if (searchParam.value != "") {
+        await fetchData("POPULARITY_DESC", year, 10, searchParam.value);
+        searchValue.value = searchParam.value;
       } else {
         searchValue.value = "";
       }
     };
 
     const filteredAnime = computed(() => {
-      if (animeList.value.length) {
-        return animeList.value;
-      } else {
-        return [];
-      }
+      return animeList.value.length > 0 ? animeList.value : [];
     });
     // END
 
@@ -110,8 +103,7 @@ export default {
       year,
       searchActive,
       searchValue,
-      getFilteredResult,
-      searchResult,
+      handleSearchValueChange,
       filteredAnime,
       isLoading,
     };

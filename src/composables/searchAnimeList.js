@@ -73,7 +73,8 @@ const queryData = `
 
 // Cancelling current query when another one is launched
 // const source = axios.CancelToken.source();
-let cancelToken;
+let call;
+let callCounter = 0;
 
 const searchAnimeList = () => {
   // TODO Make number perPage a variable
@@ -85,14 +86,8 @@ const searchAnimeList = () => {
     const url = "https://graphql.anilist.co";
 
     // Check if there are any previous pending requests
-    console.log(typeof cancelToken);
-    if (cancelToken) {
-      cancelToken.cancel("Operation canceled due to new request.");
-      console.log("query should be cancelled");
-    }
 
     // Save the cancel token for the current request
-    cancelToken = axios.CancelToken.source();
 
     let variables;
     let query;
@@ -135,25 +130,40 @@ const searchAnimeList = () => {
     }    
     `;
     }
+    callCounter++;
+    console.log("Call : ", callCounter);
+    if (call) {
+      console.log("Call aborted");
+      call.cancel();
+    }
+
+    call = axios.CancelToken.source();
 
     try {
       isLoading.value = true;
 
-      const res = await axios.post(url, {
-        query: query,
-        variables: variables,
-        cancelToken: cancelToken.token,
-      });
+      const res = await axios.post(
+        url,
+        {
+          query: query,
+          variables: variables,
+        },
+        {
+          cancelToken: call.token,
+        }
+      );
 
       // Temporary animeList for formatting the final animeList
       const tempAnimeList = [...res.data.data.Page.media];
+      console.log("Temp Anime", tempAnimeList);
+      console.log("AnimeList ", animeList.value);
 
-      tempAnimeList.forEach((anime) => {
+      animeList.value = tempAnimeList.map((anime) => {
         const { currentEpisode, timeUntilAiring } = getNextEpisodeInfo(
           anime.nextAiringEpisode
         );
 
-        const tempAnime = {
+        return {
           id: anime.id,
           title: anime.title.romaji,
           synopsis: anime.description,
@@ -170,15 +180,15 @@ const searchAnimeList = () => {
           status: anime.status,
           videoTrailer: formatTrailerUrl(anime.trailer),
         };
-
-        animeList.value.push(tempAnime);
       });
-
-      console.log("animelist: ", animeList.value);
       isLoading.value = false;
     } catch (err) {
-      console.log(err.message);
       isLoading.value = false;
+      if (axios.isCancel(err)) {
+        console.log("Call canceled due to new request");
+      } else {
+        console.log(err.message);
+      }
     }
   };
 

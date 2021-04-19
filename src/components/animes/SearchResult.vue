@@ -16,9 +16,6 @@
 
 export default {
   props: {
-    searchResult: {
-      type: Array,
-    },
     searchValue: {
       type: String,
     },
