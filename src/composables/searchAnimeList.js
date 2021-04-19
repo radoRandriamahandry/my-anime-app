@@ -74,7 +74,6 @@ const queryData = `
 // Cancelling current query when another one is launched
 // const source = axios.CancelToken.source();
 let call;
-let callCounter = 0;
 
 const searchAnimeList = () => {
   // TODO Make number perPage a variable
@@ -130,13 +129,13 @@ const searchAnimeList = () => {
     }    
     `;
     }
-    callCounter++;
-    console.log("Call : ", callCounter);
+
+    // Cancelling the previous call
     if (call) {
-      console.log("Call aborted");
       call.cancel();
     }
 
+    // Create a new token for the current call
     call = axios.CancelToken.source();
 
     try {
@@ -155,8 +154,6 @@ const searchAnimeList = () => {
 
       // Temporary animeList for formatting the final animeList
       const tempAnimeList = [...res.data.data.Page.media];
-      console.log("Temp Anime", tempAnimeList);
-      console.log("AnimeList ", animeList.value);
 
       animeList.value = tempAnimeList.map((anime) => {
         const { currentEpisode, timeUntilAiring } = getNextEpisodeInfo(
