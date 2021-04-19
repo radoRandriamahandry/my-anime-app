@@ -42,19 +42,9 @@ const getNextEpisodeInfo = (nextAiringEpisode) => {
   return { currentEpisode, timeUntilAiring };
 };
 
-const getAnimeList = () => {
-  // TODO Make number perPage a variable
-  // const cancelToken = axios.cancelToken;
-
-  const isLoading = ref(false);
-  const animeList = ref([]);
-
-  const fetchData = async (sortBy, year, perPage = 4, searchValue) => {
-    const url = "https://graphql.anilist.co";
-    let variables;
-    let query;
-
-    const queryData = `
+// TODO create export for this
+// List of data to querry
+const queryData = `
     id
     title {
       romaji
@@ -81,7 +71,33 @@ const getAnimeList = () => {
     }
   `;
 
-    // Manage searchValue
+// Cancelling current query when another one is launched
+// const source = axios.CancelToken.source();
+let cancelToken;
+
+const searchAnimeList = () => {
+  // TODO Make number perPage a variable
+
+  const animeList = ref([]);
+  const isLoading = ref(false);
+
+  const fetchData = async (sortBy, year, perPage = 4, searchValue) => {
+    const url = "https://graphql.anilist.co";
+
+    // Check if there are any previous pending requests
+    console.log(typeof cancelToken);
+    if (cancelToken) {
+      cancelToken.cancel("Operation canceled due to new request.");
+      console.log("query should be cancelled");
+    }
+
+    // Save the cancel token for the current request
+    cancelToken = axios.CancelToken.source();
+
+    let variables;
+    let query;
+
+    // TODO Create a function for generating the query
     if (searchValue) {
       variables = {
         page: 1,
@@ -90,7 +106,6 @@ const getAnimeList = () => {
         sort: sortBy,
         search: searchValue,
       };
-
       query = `
       query ($page: Int, $perPage: Int, $sort: [MediaSort], $search: String) {
       Page (page: $page, perPage: $perPage) {
@@ -101,6 +116,7 @@ const getAnimeList = () => {
     }    
     `;
     }
+
     if (!searchValue) {
       variables = {
         page: 1,
@@ -126,7 +142,7 @@ const getAnimeList = () => {
       const res = await axios.post(url, {
         query: query,
         variables: variables,
-        // cancelToken: cancelToken.token,
+        cancelToken: cancelToken.token,
       });
 
       // Temporary animeList for formatting the final animeList
@@ -157,6 +173,8 @@ const getAnimeList = () => {
 
         animeList.value.push(tempAnime);
       });
+
+      console.log("animelist: ", animeList.value);
       isLoading.value = false;
     } catch (err) {
       console.log(err.message);
@@ -167,4 +185,4 @@ const getAnimeList = () => {
   return { isLoading, animeList, fetchData };
 };
 
-export default getAnimeList;
+export default searchAnimeList;

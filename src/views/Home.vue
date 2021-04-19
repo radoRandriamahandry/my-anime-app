@@ -38,7 +38,8 @@ import SearchBar from "../components/SearchBar";
 import SearchResult from "../components/animes/SearchResult";
 
 // Composables
-import getAnimeList from "@/composables/getAnimeList";
+// import getAnimeList from "@/composables/getAnimeList";
+import searchAnimeList from "@/composables/searchAnimeList";
 
 // import AnimeCarousel from "../components/animes/AnimeCarousel";
 
@@ -83,14 +84,16 @@ export default {
 
     // START Fetch filter result
     const searchResult = ref([]);
-    const { isLoading, animeList, fetchData } = getAnimeList();
+    const { isLoading, animeList, fetchData } = searchAnimeList();
 
     const getFilteredResult = async (value) => {
       animeList.value = [];
       if (value !== "") {
         await fetchData("POPULARITY_DESC", year, 10, value);
+        searchValue.value = value;
+      } else {
+        searchValue.value = "";
       }
-      searchValue.value = value;
     };
 
     const filteredAnime = computed(() => {
