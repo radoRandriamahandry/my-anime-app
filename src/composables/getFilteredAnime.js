@@ -1,18 +1,16 @@
 import { ref } from "vue";
 import axios from "axios";
+import { animeDetails } from "./utils/animeDetails";
 
 const query = `
-    query ($search: String) {
-      Page (page: 1, perPage: 10) {
-        media (type: ANIME, search: $search, sort: POPULARITY_DESC) {
-          id
-          title {
-            romaji
-          }
-        }
+  query ($search: String) {
+    Page (page: 1, perPage: 10) {
+      media (type: ANIME, search: $search, sort: POPULARITY_DESC) {
+        ${animeDetails}
       }
     }
-  `;
+  }
+`;
 
 const url = "https://graphql.anilist.co";
 

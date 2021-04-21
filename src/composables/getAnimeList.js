@@ -1,46 +1,13 @@
 import { ref } from "@vue/reactivity";
 import axios from "axios";
 
-import format from "date-fns/format";
-import addSeconds from "date-fns/addSeconds";
-
-// Format Data
-const formatDate = (seconds) => {
-  const helperDate = addSeconds(new Date(0), seconds);
-  return format(helperDate, "do E, HH:mm");
-};
-
-const formatTrailerUrl = (trailer) => {
-  return trailer ? `https://www.youtube.com/embed/${trailer.id}` : "NC";
-};
-
-// Validate data
-const validateEpisodes = (episodes) => {
-  if (episodes) {
-    return episodes;
-  } else {
-    return "??";
-  }
-};
-
-const validateScore = (score) => {
-  return score ? score : "NC";
-};
-
-// Get and validate NextAiringEpisode and current episode
-const getNextEpisodeInfo = (nextAiringEpisode) => {
-  let currentEpisode;
-  let timeUntilAiring;
-
-  if (nextAiringEpisode != null) {
-    currentEpisode = nextAiringEpisode.episode - 1;
-    timeUntilAiring = formatDate(nextAiringEpisode.timeUntilAiring);
-  } else {
-    currentEpisode = 0;
-    timeUntilAiring = "??";
-  }
-  return { currentEpisode, timeUntilAiring };
-};
+import { animeDetails } from "./utils/animeDetails";
+import {
+  formatTrailerUrl,
+  validateEpisodes,
+  validateScore,
+  getNextEpisodeInfo,
+} from "./utils/helpers";
 
 const getAnimeList = () => {
   // TODO Make number perPage a variable
@@ -54,32 +21,7 @@ const getAnimeList = () => {
     let variables;
     let query;
 
-    const queryData = `
-    id
-    title {
-      romaji
-    }
-    description
-    coverImage {
-      extraLarge
-    }
-    bannerImage
-    episodes
-    genres
-    duration
-    format
-    nextAiringEpisode {
-      episode
-      timeUntilAiring
-    }
-    averageScore
-    status
-    trailer {
-      id
-      site
-      thumbnail
-    }
-  `;
+    const queryData = animeDetails;
 
     // Manage searchValue
     if (searchValue) {
@@ -90,16 +32,15 @@ const getAnimeList = () => {
         sort: sortBy,
         search: searchValue,
       };
-
       query = `
-      query ($page: Int, $perPage: Int, $sort: [MediaSort], $search: String) {
-      Page (page: $page, perPage: $perPage) {
-        media (type: ANIME, sort: $sort,search: $search) {
-          ${queryData}
-        }
-      }
-    }    
-    `;
+        query ($page: Int, $perPage: Int, $sort: [MediaSort], $search: String) {
+          Page (page: $page, perPage: $perPage) {
+            media (type: ANIME, sort: $sort,search: $search) {
+              ${queryData}
+            }
+          }
+        }    
+      `;
     }
     if (!searchValue) {
       variables = {
@@ -108,16 +49,15 @@ const getAnimeList = () => {
         seasonYear: year,
         sort: sortBy,
       };
-
       query = `
-      query ($page: Int, $perPage: Int, $seasonYear: Int, $sort: [MediaSort]) {
-      Page (page: $page, perPage: $perPage) {
-        media (type: ANIME, sort: $sort, season: SPRING, seasonYear: $seasonYear) {
-          ${queryData}
-        }
-      }
-    }    
-    `;
+          query ($page: Int, $perPage: Int, $seasonYear: Int, $sort: [MediaSort]) {
+          Page (page: $page, perPage: $perPage) {
+            media (type: ANIME, sort: $sort, season: SPRING, seasonYear: $seasonYear) {
+              ${queryData}
+            }
+          }
+        }    
+      `;
     }
 
     try {
