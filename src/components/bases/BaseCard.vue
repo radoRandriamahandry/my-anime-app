@@ -1,14 +1,15 @@
 <template>
   <div
-    class="card__wrapper grid max-h-80 overflow-hidden grid-rows-3/1 bg-white h-auto cursor-pointer"
+    class="group grid max-h-80 overflow-hidden grid-rows-3/1 bg-white h-auto cursor-pointer"
   >
     <!-- TODO check how to use slot component and slot name -->
-
-    <!-- Default slot here -->
-    <!-- Add Status and Score at hover -->
-    <!-- Image -->
-    <div class="card__image overflow-hidden filter saturate-50">
-      <img :src="imageUrl" class="transition duration-500" />
+    <div
+      class="card__image overflow-hidden filter saturate-50 group-hover:saturate-100"
+    >
+      <img
+        :src="imageUrl"
+        class="transition duration-500 group-hover:transform group-hover:scale-105"
+      />
     </div>
     <div class="grid items-center grid-rows-5/3 px-4">
       <!-- Title -->
@@ -49,12 +50,4 @@ export default {
 };
 </script>
 
-<style>
-.card__wrapper:hover .card__image > img {
-  @apply transform scale-105;
-}
-
-.card__wrapper:hover .card__image {
-  @apply saturate-100;
-}
-</style>
+<style></style>

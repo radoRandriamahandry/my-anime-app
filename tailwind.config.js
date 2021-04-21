@@ -25,6 +25,9 @@ module.exports = {
   variants: {
     extend: {
       textAlign: ["even", "odd"],
+      transform: ["group-hover"],
+      scale: ["group-hover"],
+      saturate: ["group-hover"],
     },
   },
   plugins: [],
