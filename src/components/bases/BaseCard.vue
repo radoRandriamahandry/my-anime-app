@@ -1,5 +1,7 @@
 <template>
-  <div class="card__wrapper overflow-hidden bg-white h-auto cursor-pointer">
+  <div
+    class="card__wrapper grid max-h-80 overflow-hidden grid-rows-3/1 bg-white h-auto cursor-pointer"
+  >
     <!-- TODO check how to use slot component and slot name -->
 
     <!-- Default slot here -->
@@ -8,7 +10,7 @@
     <div class="card__image overflow-hidden filter saturate-50">
       <img :src="imageUrl" class="transition duration-500" />
     </div>
-    <div class="description px-4">
+    <div class="grid items-center grid-rows-5/3 px-4">
       <!-- Title -->
       <div class="pt-2 text-sm ">
         {{ title }}
@@ -48,12 +50,6 @@ export default {
 </script>
 
 <style>
-.card__wrapper {
-  display: grid;
-  max-height: 325px;
-  grid-template-rows: 3fr 1fr;
-}
-
 .card__wrapper:hover .card__image > img {
   @apply transform scale-105;
 }
@@ -61,22 +57,4 @@ export default {
 .card__wrapper:hover .card__image {
   @apply saturate-100;
 }
-
-.description {
-  display: grid;
-  grid-template-rows: 5fr 3fr;
-  align-items: center;
-}
-
-/* // .card__image {
-  //   width: 100%;
-  //   height: auto;
-  //   max-width: 491px;
-  //   max-height: 352px;
-  //   display: block;
-  //   overflow: hidden;
-  //   object-fit: cover;
-  //   object-position: top;
-  //   overflow: hidden;
-  // } */
 </style>

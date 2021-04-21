@@ -13,6 +13,13 @@ module.exports = {
         },
         background: "f4f7f6",
       },
+      gridTemplateColumns: {
+        "fit-200": "repeat(auto-fit, minmax(200px, 1fr))",
+      },
+      gridTemplateRows: {
+        "3/1": "3fr 1fr",
+        "5/3": "5fr 3fr",
+      },
     },
   },
   variants: {

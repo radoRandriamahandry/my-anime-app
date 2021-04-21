@@ -11,7 +11,10 @@
     <div v-if="isLoading">Loading data...</div>
 
     <div v-if="!isLoading">
-      <div class="grid overflow-hidden gap-5 gtc-200" v-if="animeList.length">
+      <div
+        class="grid overflow-hidden gap-5 grid-cols-fit-200"
+        v-if="animeList.length"
+      >
         <div v-for="anime in animeList" :key="anime.id">
           <AnimeListItem :anime="anime" />
         </div>
@@ -79,8 +82,4 @@ export default {
 };
 </script>
 
-<style>
-.gtc-200 {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-</style>
+<style></style>

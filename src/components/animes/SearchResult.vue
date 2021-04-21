@@ -46,8 +46,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.gtc-200 {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-</style>
+<style scoped></style>

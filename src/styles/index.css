@@ -95,4 +95,11 @@ a {
   color: #9da1b1;
   cursor: not-allowed;
 }
+
+/* Layout */
+/* Grid */
+/* .gtc-200 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+} */
+
 /*# sourceMappingURL=main.css.map */
