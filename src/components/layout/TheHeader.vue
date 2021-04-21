@@ -5,7 +5,7 @@
     <h1 class="ml-8 font-bold text-gray-700">
       <router-link :to="{ name: 'Home' }">ANIME APP</router-link>
     </h1>
-    <div class="navbar__links flex h-full">
+    <div class="flex h-full">
       <div class="flex items-center px-7">
         <router-link to="#">Another link</router-link>
       </div>
