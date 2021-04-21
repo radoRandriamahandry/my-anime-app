@@ -1,20 +1,29 @@
 <template>
-  <p>Search result</p>
-
-  <div v-if="isLoading">Loading...</div>
-  <div v-else>
-    <div v-for="anime in filteredAnime" :key="anime.id">
-      {{ anime.title }}
+  <div class="mt-6">
+    <!-- TODO create a spinner -->
+    <div v-if="isLoading">Loading data...</div>
+    <div v-if="!isLoading">
+      <div
+        class="overflow-hidden grid gap-5 gtc-200"
+        v-if="filteredAnime.length"
+      >
+        <div v-for="anime in filteredAnime" :key="anime.id">
+          <AnimeListItem :anime="anime" />
+        </div>
+      </div>
     </div>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
 // import getFilteredAnime from "@/composables/getFilteredAnime";
 // import { computed, onUpdated, ref, watch } from "vue";
+import AnimeListItem from "../animes/AnimeListItem";
 
 export default {
+  components: {
+    AnimeListItem,
+  },
   props: {
     searchValue: {
       type: String,
@@ -37,4 +46,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.gtc-200 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+</style>
