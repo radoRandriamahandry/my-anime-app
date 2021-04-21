@@ -34,9 +34,11 @@
           </div>
           <h3 class="font-bold">Synopsis</h3>
           <p class="leading-6 text-sm"><span v-html="anime.synopsis"></span></p>
-          <h3 class="font-bold mt-4 mb-2">Trailer</h3>
-          <div class="iframe__container">
-            <iframe :title="anime.title" :src="anime.videoTrailer"></iframe>
+          <div v-if="anime.videoTrailer != 'NC'">
+            <h3 class="font-bold mt-4 mb-2">Trailer</h3>
+            <div class="iframe__container">
+              <iframe :title="anime.title" :src="anime.videoTrailer"></iframe>
+            </div>
           </div>
         </div>
       </div>

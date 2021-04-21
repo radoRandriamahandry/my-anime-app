@@ -12,32 +12,6 @@
       :status="anime.status"
       :score="anime.averageScore"
     />
-
-    <!-- Insert at hover -->
-    <!-- <ul>
-      <li
-        class="inline-block mr-1 px-1 text-xs text-gray-400 border rounded-xl  border-gray-400"
-        v-for="genre in anime.genres"
-        :key="genre"
-      >
-        {{ genre }}
-      </li>
-    </ul> -->
-
-    <!-- <div class="card__info">
-      <div class="card__genre"></div>
-      <div class="card__schedule card__flex">
-        <div class="card__time">next. {{ anime.timeUntilAiring }}</div>
-        <div>ep. {{ anime.currentEpisode }} / {{ anime.episodes }}</div>
-      </div>
-    </div>
-    <div class="card__footer card__flex">
-      <div class="card__status">{{ anime.status }}</div>
-      <div class="card__score">
-        Score :
-        <span class="card__score--number">{{ anime.averageScore }}</span>
-      </div>
-    </div> -->
   </div>
 </template>
 

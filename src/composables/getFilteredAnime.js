@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import axios from "axios";
-import { animeDetails } from "./utils/animeDetails";
+import { animeDetails } from "./utils/helperQuery";
 
 const query = `
   query ($search: String) {

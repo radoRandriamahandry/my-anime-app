@@ -1,13 +1,13 @@
 import { ref } from "@vue/reactivity";
 import axios from "axios";
 
-import { animeDetails } from "./utils/animeDetails";
+import { animeDetails, setQueryRequest } from "./utils/helperQuery";
 import {
   formatTrailerUrl,
   validateEpisodes,
   validateScore,
   getNextEpisodeInfo,
-} from "./utils/helpers";
+} from "./utils/helperFunctions";
 
 const getAnimeList = () => {
   // TODO Make number perPage a variable
@@ -18,47 +18,17 @@ const getAnimeList = () => {
 
   const fetchData = async (sortBy, year, perPage = 4, searchValue) => {
     const url = "https://graphql.anilist.co";
-    let variables;
-    let query;
 
-    const queryData = animeDetails;
+    const dataToQuery = animeDetails;
 
-    // Manage searchValue
-    if (searchValue) {
-      variables = {
-        page: 1,
-        perPage: 10,
-        // seasonYear: year,
-        sort: sortBy,
-        search: searchValue,
-      };
-      query = `
-        query ($page: Int, $perPage: Int, $sort: [MediaSort], $search: String) {
-          Page (page: $page, perPage: $perPage) {
-            media (type: ANIME, sort: $sort,search: $search) {
-              ${queryData}
-            }
-          }
-        }    
-      `;
-    }
-    if (!searchValue) {
-      variables = {
-        page: 1,
-        perPage: perPage,
-        seasonYear: year,
-        sort: sortBy,
-      };
-      query = `
-          query ($page: Int, $perPage: Int, $seasonYear: Int, $sort: [MediaSort]) {
-          Page (page: $page, perPage: $perPage) {
-            media (type: ANIME, sort: $sort, season: SPRING, seasonYear: $seasonYear) {
-              ${queryData}
-            }
-          }
-        }    
-      `;
-    }
+    // Set the type of query search or filter
+    const { variables, query } = setQueryRequest(
+      sortBy,
+      year,
+      perPage,
+      dataToQuery,
+      searchValue
+    );
 
     try {
       isLoading.value = true;
