@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="card__wrapper rounded overflow-hidden bg-white h-auto cursor-pointer"
-  >
+  <div class="card__wrapper overflow-hidden bg-white h-auto cursor-pointer">
     <!-- TODO check how to use slot component and slot name -->
 
     <!-- Default slot here -->
