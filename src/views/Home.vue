@@ -32,16 +32,11 @@
 <script>
 // Components
 import AnimeList from "../components/animes/AnimeList";
-import SearchBar from "../components/SearchBar";
+// import SearchBar from "../components/SearchBar";
 import SearchResult from "../components/animes/SearchResult";
 
 // Composables
-// import getAnimeList from "@/composables/getAnimeList";
 import searchAnimeList from "@/composables/searchAnimeList";
-
-// import AnimeCarousel from "../components/animes/AnimeCarousel";
-
-// import getFilteredAnime from "@/composables/getFilteredAnime";
 
 import { computed, ref } from "vue";
 
@@ -49,7 +44,7 @@ export default {
   name: "Home",
   components: {
     AnimeList,
-    SearchBar,
+    // SearchBar,
     SearchResult,
   },
   setup() {
