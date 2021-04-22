@@ -10,7 +10,6 @@
   "dependencies": {
     "@headlessui/vue": "^1.0.0",
     "@heroicons/vue": "^1.0.1",
-    "@splidejs/vue-splide": "^0.3.5",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "date-fns": "^2.19.0",
