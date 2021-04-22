@@ -1,16 +1,14 @@
 <template>
   <!-- <div id="nav"><router-link to="/">Home</router-link></div> -->
-  <TheHeaderTest />
+  <TheHeader />
   <router-view />
 </template>
 
 <script>
-// import TheHeader from "./components/layout/TheHeader";
-import TheHeaderTest from "./components/layout/TheHeaderTest";
+import TheHeader from "./components/layout/TheHeader";
 export default {
   components: {
-    // TheHeader,
-    TheHeaderTest,
+    TheHeader,
   },
 };
 </script>

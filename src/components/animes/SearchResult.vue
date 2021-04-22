@@ -4,7 +4,7 @@
     <div v-if="isLoading">Loading data...</div>
     <div v-if="!isLoading">
       <div
-        class="overflow-hidden grid gap-5 gtc-200"
+        class="overflow-hidden grid gap-5 grid-cols-fit-200"
         v-if="filteredAnime.length"
       >
         <div v-for="anime in filteredAnime" :key="anime.id">
@@ -25,7 +25,7 @@ export default {
     AnimeListItem,
   },
   props: {
-    searchValue: {
+    searchTerm: {
       type: String,
     },
     filteredAnime: {
@@ -34,14 +34,6 @@ export default {
     isLoading: {
       type: Boolean,
     },
-  },
-
-  setup(props) {
-    // const { animeList, isLoading, fetchData } = getFilteredAnime(
-    //   props.searchValue.value
-    // );
-    // fetchData();
-    // return { animeList, isLoading };
   },
 };
 </script>

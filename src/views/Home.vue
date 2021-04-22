@@ -1,10 +1,5 @@
 <template>
   <div class="container">
-    <!-- <SearchBar
-      @searchValueChanged="handleSearchValueChange"
-      :searchValue="searchValue"
-    /> -->
-
     <div v-show="!searchActive">
       <AnimeList
         :sortBy="sortByList.popularity"
@@ -21,7 +16,7 @@
 
     <div v-if="searchActive">
       <SearchResult
-        :searchValue="searchValue"
+        :searchTerm="searchTerm"
         :filteredAnime="filteredAnime"
         :isLoading="isLoading"
       />
@@ -32,19 +27,18 @@
 <script>
 // Components
 import AnimeList from "../components/animes/AnimeList";
-// import SearchBar from "../components/SearchBar";
 import SearchResult from "../components/animes/SearchResult";
 
 // Composables
 import searchAnimeList from "@/composables/searchAnimeList";
+import useSearch from "@/composables/search/useSearch";
 
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 export default {
   name: "Home",
   components: {
     AnimeList,
-    // SearchBar,
     SearchResult,
   },
   setup() {
@@ -63,25 +57,22 @@ export default {
     };
 
     // Manage Search bar
-    const searchValue = ref("");
-
     // Conditionnal DISPLAY of animeList or SearchResult
     // When the searchValue is not empty show search Result
+    const { searchTerm } = useSearch();
+
     const searchActive = computed(() => {
-      return searchValue.value == "" ? false : true;
+      return searchTerm.value == "" ? false : true;
     });
 
     // START Fetch filter result
     const { isLoading, animeList, fetchData } = searchAnimeList();
 
-    const handleSearchValueChange = async (searchParam) => {
-      if (searchParam.value != "") {
-        await fetchData("POPULARITY_DESC", year, 10, searchParam.value);
-        searchValue.value = searchParam.value;
-      } else {
-        searchValue.value = "";
+    watch(searchTerm, () => {
+      if (searchTerm.value != "") {
+        fetchData("POPULARITY_DESC", year, 10, searchTerm.value);
       }
-    };
+    });
 
     const filteredAnime = computed(() => {
       return animeList.value.length > 0 ? animeList.value : [];
@@ -92,8 +83,7 @@ export default {
       sortByList,
       year,
       searchActive,
-      searchValue,
-      handleSearchValueChange,
+      searchTerm,
       filteredAnime,
       isLoading,
     };

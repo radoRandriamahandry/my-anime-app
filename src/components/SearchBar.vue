@@ -19,22 +19,22 @@
 <script>
 import { watch, ref } from "vue";
 import { SearchIcon } from "@heroicons/vue/outline";
+import useSearch from "@/composables/search/useSearch";
 
 export default {
   components: {
     SearchIcon,
   },
-  props: ["searchValue"],
-  setup(props, context) {
+  setup() {
+    const { updateSearchTerm } = useSearch();
+    updateSearchTerm("");
+
     const inputValue = ref("");
 
     watch(inputValue, () => {
-      context.emit("searchValueChanged", inputValue);
+      updateSearchTerm(inputValue.value);
     });
 
-    // const handleSearch = () => {
-    //   context.emit("searchValueChanged", inputValue);
-    // };
     return { inputValue };
   },
 };

@@ -1,17 +1,17 @@
 import { createApp } from "vue";
-import { createStore } from "vuex";
+// import { createStore } from "vuex";
 import App from "./App.vue";
 import router from "./router";
 
 import "./styles/index.css";
 
-const store = createStore({
-  state() {
-    return {
-      counter: 0,
-    };
-  },
-});
+// const store = createStore({
+//   state() {
+//     return {
+//       counter: 0,
+//     };
+//   },
+// });
 
 const app = createApp(App);
 
