@@ -16,24 +16,37 @@
 </template>
 
 <script>
-// import getFilteredAnime from "@/composables/getFilteredAnime";
-// import { computed, onUpdated, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import AnimeListItem from "../animes/AnimeListItem";
+
+// Composables
+import useSearch from "@/composables/search/useSearch";
+import searchAnimeList from "@/composables/searchAnimeList";
 
 export default {
   components: {
     AnimeListItem,
   },
-  props: {
-    searchTerm: {
-      type: String,
-    },
-    filteredAnime: {
-      type: Array,
-    },
-    isLoading: {
-      type: Boolean,
-    },
+
+  setup() {
+    const date = new Date();
+    const year = ref(parseInt(date.getFullYear()));
+    const { searchTerm } = useSearch();
+    const { isLoading, animeList, fetchData } = searchAnimeList();
+
+    watch(searchTerm, () => {
+      if (searchTerm.value != "") {
+        fetchData("POPULARITY_DESC", year, 10, searchTerm.value);
+      }
+    });
+
+    // GET search Result
+    const filteredAnime = computed(() => {
+      return animeList.value.length > 0 ? animeList.value : [];
+    });
+    // END
+
+    return { isLoading, filteredAnime };
   },
 };
 </script>

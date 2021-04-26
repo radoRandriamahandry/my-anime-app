@@ -2,24 +2,20 @@
   <div class="container">
     <div v-show="!searchActive">
       <AnimeList
-        :sortBy="sortByList.popularity"
+        :sortBy="SORT_BY_TYPE.popularity"
         :year="year"
         title="Most Popular"
       />
       <AnimeList
-        :sortBy="sortByList.trend"
+        :sortBy="SORT_BY_TYPE.trend"
         title="Most Trending"
         :perPage="16"
       />
-      <AnimeList :sortBy="sortByList.favourites" title="Users Favourites" />
+      <AnimeList :sortBy="SORT_BY_TYPE.favourites" title="Users Favourites" />
     </div>
 
     <div v-if="searchActive">
-      <SearchResult
-        :searchTerm="searchTerm"
-        :filteredAnime="filteredAnime"
-        :isLoading="isLoading"
-      />
+      <SearchResult />
     </div>
   </div>
 </template>
@@ -30,10 +26,9 @@ import AnimeList from "../components/animes/AnimeList";
 import SearchResult from "../components/animes/SearchResult";
 
 // Composables
-import searchAnimeList from "@/composables/searchAnimeList";
 import useSearch from "@/composables/search/useSearch";
 
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 
 export default {
   name: "Home",
@@ -48,7 +43,7 @@ export default {
     const date = new Date();
     const year = ref(parseInt(date.getFullYear()));
 
-    const sortByList = {
+    const SORT_BY_TYPE = {
       popularity: "POPULARITY_DESC",
       score: "SCORE_DESC",
       trend: "TRENDING_DESC",
@@ -65,27 +60,11 @@ export default {
       return searchTerm.value == "" ? false : true;
     });
 
-    // START Fetch filter result
-    const { isLoading, animeList, fetchData } = searchAnimeList();
-
-    watch(searchTerm, () => {
-      if (searchTerm.value != "") {
-        fetchData("POPULARITY_DESC", year, 10, searchTerm.value);
-      }
-    });
-
-    const filteredAnime = computed(() => {
-      return animeList.value.length > 0 ? animeList.value : [];
-    });
-    // END
-
     return {
-      sortByList,
-      year,
+      SORT_BY_TYPE,
       searchActive,
       searchTerm,
-      filteredAnime,
-      isLoading,
+      year,
     };
   },
 };
