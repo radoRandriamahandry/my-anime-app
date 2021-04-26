@@ -1,17 +1,31 @@
 <template>
   <div class="container">
     <div v-show="!searchActive">
-      <AnimeList
-        :sortBy="SORT_BY_TYPE.popularity"
-        :year="year"
-        title="Most Popular"
-      />
-      <AnimeList
-        :sortBy="SORT_BY_TYPE.trend"
-        title="Most Trending"
-        :perPage="16"
-      />
-      <AnimeList :sortBy="SORT_BY_TYPE.favourites" title="Users Favourites" />
+      <suspense>
+        <template #default>
+          <AnimeList
+            :sortBy="SORT_BY_TYPE.popularity"
+            :year="year"
+            title="Most Popular"
+          />
+        </template>
+        <template #fallback>Is loading...</template>
+      </suspense>
+      <suspense>
+        <template #default>
+          <AnimeList :sortBy="SORT_BY_TYPE.trend" title="Most Trending" />
+        </template>
+        <template #fallback>Is Loading</template>
+      </suspense>
+      <suspense>
+        <template #default>
+          <AnimeList
+            :sortBy="SORT_BY_TYPE.favourites"
+            title="Users Favourites"
+          />
+        </template>
+        <template #fallback>Is loading ....</template>
+      </suspense>
     </div>
 
     <div v-if="searchActive">
