@@ -9,14 +9,14 @@ import {
   getNextEpisodeInfo,
 } from "./utils/helperFunctions";
 
-const getAnimeList = () => {
+const getAnimeList = (sortBy, year, perPage = 5, searchValue) => {
   // TODO Make number perPage a variable
   // const cancelToken = axios.cancelToken;
 
   const isLoading = ref(false);
   const animeList = ref([]);
 
-  const fetchData = async (sortBy, year, perPage = 4, searchValue) => {
+  const fetchData = async () => {
     const url = "https://graphql.anilist.co";
 
     const dataToQuery = animeDetails;
@@ -73,6 +73,8 @@ const getAnimeList = () => {
       isLoading.value = false;
     }
   };
+
+  // await fetchData();
 
   return { isLoading, animeList, fetchData };
 };

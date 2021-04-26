@@ -6,18 +6,12 @@
     <h2 class="py-11 font-light">
       <span class="font-bold">{{ title }}</span> anime
     </h2>
-
-    <!-- TODO create a spinner -->
-    <div v-if="isLoading">Loading data...</div>
-
-    <div v-if="!isLoading">
-      <div
-        class="grid overflow-hidden gap-5 grid-cols-fit-200"
-        v-if="animeList.length"
-      >
-        <div v-for="anime in animeList" :key="anime.id">
-          <AnimeListItem :anime="anime" />
-        </div>
+    <div
+      class="grid overflow-hidden gap-5 grid-cols-fit-200"
+      v-if="animeList.length"
+    >
+      <div v-for="anime in animeList" :key="anime.id">
+        <AnimeListItem :anime="anime" />
       </div>
     </div>
   </div>
@@ -55,13 +49,13 @@ export default {
       type: Number,
       required: false,
     },
-    perPage: {
-      type: [Number, String],
-      required: false,
-    },
+    // perPage: {
+    //   type: [Number, String],
+    //   required: false,
+    // },
   },
 
-  setup(props) {
+  async setup(props) {
     // Start fetching the anime list
     const date = new Date();
     let year = parseInt(date.getFullYear());
@@ -69,13 +63,11 @@ export default {
     if (props.year) {
       year = parseInt(props.year);
     }
-    const { isLoading, animeList, fetchData } = getAnimeList();
-    if (props.perPage) {
-      fetchData(props.sortBy, year, parseInt(props.perPage));
-    }
-    if (!props.perPage) {
-      fetchData(props.sortBy, year);
-    }
+    const { isLoading, animeList, fetchData } = getAnimeList(
+      props.sortBy,
+      year
+    );
+    await fetchData();
 
     return { isLoading, animeList };
   },
