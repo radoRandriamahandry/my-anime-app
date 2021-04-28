@@ -1,6 +1,6 @@
 <template>
   <div class="mb-9">
-    <div class="animate-pulse my-11 p-4 bg-gray-300 max-w-sm rounded-md"></div>
+    <div class="animate-pulse my-11 p-3 bg-gray-300 w-48 rounded-md"></div>
     <div class="grid overflow-hidden gap-5 grid-cols-fit-200">
       <div v-for="item in 5" :key="item">
         <div class="group grid h-80 overflow-hidden grid-rows-3/1 bg-white">

@@ -4,14 +4,14 @@ import axios from "axios"
 import { animeDetails, setQueryRequest } from "./utils/helperQuery"
 import { formatTrailerUrl, getNextEpisodeInfo } from "./utils/helperFunctions"
 
-const getAnimeList = (sortBy, year, perPage = 5, searchValue) => {
+const getAnimeList = () => {
   // TODO Make number perPage a variable
   // const cancelToken = axios.cancelToken;
 
   const isLoading = ref(false)
   const animeList = ref([])
 
-  const fetchData = async () => {
+  const fetchData = async (sortBy, year, perPage, searchValue) => {
     const url = "https://graphql.anilist.co"
 
     const dataToQuery = animeDetails
@@ -20,7 +20,7 @@ const getAnimeList = (sortBy, year, perPage = 5, searchValue) => {
     const { variables, query } = setQueryRequest(
       sortBy,
       year,
-      perPage,
+      perPage || 10,
       dataToQuery,
       searchValue
     )

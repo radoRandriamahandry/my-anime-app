@@ -3,36 +3,38 @@
   <!-- <button @click="updateActiveSlideListIndex('next')">next</button> -->
 
   <div class="mb-9">
-    <h2 class="py-11 font-light">
-      <span class="font-bold">{{ title }}</span> anime
-    </h2>
-    <div
-      class="grid overflow-hidden gap-5 grid-cols-fit-200"
-      v-if="animeList.length"
-    >
-      <div v-for="anime in animeList" :key="anime.id">
-        <AnimeListItem :anime="anime" />
+    <div v-if="isLoading">
+      <SkeletonAnimeList />
+    </div>
+    <div v-else>
+      <h2 class="py-11 font-light">
+        <span class="font-bold">{{ title }}</span> anime
+      </h2>
+      <div
+        class="grid overflow-hidden gap-x-5 gap-y-10 grid-cols-fit-200"
+        v-if="animeList.length"
+      >
+        <div v-for="anime in animeList" :key="anime.id">
+          <AnimeListItem :anime="anime" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// Import splide
-// import { Splide, SplideSlide } from "@splidejs/vue-splide";
-// import "@splidejs/splide/dist/css/themes/splide-default.min.css";
-
 // components
-import AnimeListItem from "../animes/AnimeListItem";
+import AnimeListItem from "../animes/AnimeListItem"
+import SkeletonAnimeList from "@/components/skeleton/SkeletonAnimeList"
 
 // Composables
-import getAnimeList from "@/composables/getAnimeList";
+import getAnimeList from "@/composables/getAnimeList"
+import { computed, watch } from "vue"
 
 export default {
   components: {
     AnimeListItem,
-    // Splide,
-    // SplideSlide,
+    SkeletonAnimeList,
   },
 
   // TODO get props for filtering the anime list
@@ -49,29 +51,38 @@ export default {
       type: Number,
       required: false,
     },
-    // perPage: {
-    //   type: [Number, String],
-    //   required: false,
-    // },
+    perPage: {
+      type: [Number, String],
+      required: false,
+    },
   },
 
-  async setup(props) {
+  setup(props) {
     // Start fetching the anime list
-    const date = new Date();
-    let year = parseInt(date.getFullYear());
+    const date = new Date()
+    let year = parseInt(date.getFullYear())
+
+    // const perPage = parseInt(props.perPage) || 5
+
+    const sortBy = computed(() => {
+      return props.sortBy
+    })
 
     if (props.year) {
-      year = parseInt(props.year);
+      year = parseInt(props.year)
     }
-    const { isLoading, animeList, fetchData } = getAnimeList(
-      props.sortBy,
-      year
-    );
-    await fetchData();
+    const { isLoading, animeList, fetchData } = getAnimeList()
 
-    return { isLoading, animeList };
+    watch(sortBy, async () => {
+      animeList.value = []
+      await fetchData(sortBy.value, year, parseInt(props.perPage))
+    })
+
+    fetchData(sortBy.value, year, parseInt(props.perPage))
+
+    return { isLoading, animeList }
   },
-};
+}
 </script>
 
 <style></style>

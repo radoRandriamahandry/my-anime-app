@@ -1,6 +1,7 @@
-import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
-import AnimeDetails from "../pages/AnimeDetails.vue";
+import { createRouter, createWebHistory } from "vue-router"
+import Home from "../views/Home.vue"
+import AnimeDetails from "../pages/AnimeDetails.vue"
+import AnimesByFilter from "../pages/AnimesByFilter.vue"
 
 const routes = [
   {
@@ -15,11 +16,18 @@ const routes = [
     component: AnimeDetails,
     props: true,
   },
-];
+
+  {
+    path: "/animes/:filter",
+    name: "AnimesByFilter",
+    component: AnimesByFilter,
+    props: true,
+  },
+]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-});
+})
 
-export default router;
+export default router
