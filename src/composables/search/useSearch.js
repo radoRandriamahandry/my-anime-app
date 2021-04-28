@@ -1,17 +1,17 @@
-import { ref } from "@vue/reactivity";
+import { ref } from "@vue/reactivity"
 
 // Create isSearching
 
 // Find a way to get the search value
-const searchTerm = ref("");
+const searchTerm = ref("")
 
 // Create a function that update searchTerm
 const updateSearchTerm = (input) => {
-  searchTerm.value = input;
-};
+  searchTerm.value = input
+}
 
 const useSearch = () => {
-  return { searchTerm, updateSearchTerm };
-};
+  return { searchTerm, updateSearchTerm }
+}
 
-export default useSearch;
+export default useSearch

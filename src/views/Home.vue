@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!-- <SkeletonAnimeList /> -->
     <div v-show="!searchActive">
       <suspense>
         <AnimeList
@@ -7,15 +8,15 @@
           :year="year"
           title="Most Popular"
         />
-        <template #fallback>Is loading...</template>
+        <template #fallback><SkeletonAnimeList /></template>
       </suspense>
       <suspense>
         <AnimeList :sortBy="SORT_BY_TYPE.trend" title="Most Trending" />
-        <template #fallback>Is Loading</template>
+        <template #fallback><SkeletonAnimeList /></template>
       </suspense>
       <suspense>
         <AnimeList :sortBy="SORT_BY_TYPE.favourites" title="Users Favourites" />
-        <template #fallback>Is loading ....</template>
+        <template #fallback><SkeletonAnimeList /></template>
       </suspense>
     </div>
 
@@ -29,6 +30,7 @@
 // Components
 import AnimeList from "../components/animes/AnimeList";
 import SearchResult from "../components/animes/SearchResult";
+import SkeletonAnimeList from "../components/skeleton/SkeletonAnimeList";
 
 // Composables
 import useSearch from "@/composables/search/useSearch";
@@ -40,6 +42,7 @@ export default {
   components: {
     AnimeList,
     SearchResult,
+    SkeletonAnimeList,
   },
   setup() {
     // TODO create a filter for the getAnimeList(popular)
