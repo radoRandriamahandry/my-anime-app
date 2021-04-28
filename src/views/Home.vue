@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!-- <SkeletonAnimeList /> -->
     <div v-show="!searchActive">
       <suspense>
         <AnimeList
