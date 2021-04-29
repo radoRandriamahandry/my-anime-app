@@ -23,27 +23,27 @@ export const animeDetails = `
     site
     thumbnail
   }
-`;
+`
 
 // Set the type of query search or filter
 export const setQueryRequest = (
   sortBy,
   year,
-  perPage = 4,
+  perPage,
   dataToQuery,
   isSearch
 ) => {
-  let variables;
-  let query;
+  let variables
+  let query
 
   if (isSearch) {
     variables = {
       page: 1,
-      perPage: 10,
+      perPage: perPage,
       // seasonYear: year,
       sort: sortBy,
       search: isSearch,
-    };
+    }
     query = `
       query ($page: Int, $perPage: Int, $sort: [MediaSort], $search: String) {
         Page (page: $page, perPage: $perPage) {
@@ -52,7 +52,7 @@ export const setQueryRequest = (
           }
         }
       }    
-    `;
+    `
   }
   if (!isSearch) {
     variables = {
@@ -60,7 +60,7 @@ export const setQueryRequest = (
       perPage: perPage,
       seasonYear: year,
       sort: sortBy,
-    };
+    }
     query = `
       query ($page: Int, $perPage: Int, $seasonYear: Int, $sort: [MediaSort]) {
         Page (page: $page, perPage: $perPage) {
@@ -69,8 +69,8 @@ export const setQueryRequest = (
           }
         }
       }    
-    `;
+    `
   }
 
-  return { variables, query };
-};
+  return { variables, query }
+}

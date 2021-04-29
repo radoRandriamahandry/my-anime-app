@@ -51,11 +51,9 @@ const getAnimeList = () => {
           genres: [...anime.genres],
           duration: anime.duration > 0 ? anime.duration : "??",
           format: anime.format,
-          // episodes: validateEpisodes(anime.episodes),
           episodes: anime.episodes || "??",
           currentEpisode: currentEpisode,
           timeUntilAiring: timeUntilAiring,
-          // averageScore: validateScore(anime.averageScore),
           averageScore: anime.averageScore || "??",
           // TODO check all available status and format it
           status: anime.status,

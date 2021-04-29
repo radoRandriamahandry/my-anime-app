@@ -1,38 +1,8 @@
 import { ref } from "@vue/reactivity"
 import axios from "axios"
 
-import format from "date-fns/format"
-import addSeconds from "date-fns/addSeconds"
-
 import { animeDetails, setQueryRequest } from "./utils/helperQuery"
-
-// Format Data
-const formatDate = (seconds) => {
-  const helperDate = addSeconds(new Date(0), seconds)
-  return format(helperDate, "do E, HH:mm")
-}
-
-const formatTrailerUrl = (trailer) => {
-  return trailer ? `https://www.youtube.com/embed/${trailer.id}` : "NC"
-}
-
-// Get and validate NextAiringEpisode and current episode
-const getNextEpisodeInfo = (nextAiringEpisode) => {
-  let currentEpisode
-  let timeUntilAiring
-
-  if (nextAiringEpisode != null) {
-    currentEpisode = nextAiringEpisode.episode - 1
-    timeUntilAiring = formatDate(nextAiringEpisode.timeUntilAiring)
-  }
-
-  if (!nextAiringEpisode) {
-    currentEpisode = 0
-    timeUntilAiring = "??"
-  }
-
-  return { currentEpisode, timeUntilAiring }
-}
+import { formatTrailerUrl, getNextEpisodeInfo } from "./utils/helperFunctions"
 
 const dataToQuery = animeDetails
 
@@ -45,7 +15,7 @@ const searchAnimeList = () => {
   const animeList = ref([])
   const isLoading = ref(false)
 
-  const fetchData = async (sortBy, year, perPage = 4, searchValue) => {
+  const fetchData = async (sortBy, year, perPage, searchValue) => {
     const url = "https://graphql.anilist.co"
 
     const { variables, query } = setQueryRequest(

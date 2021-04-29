@@ -3,7 +3,7 @@
     <AnimeList
       :sortBy="sortBy"
       :year="year"
-      :perPage="15"
+      :perPage="20"
       title="Just some test"
     />
   </div>

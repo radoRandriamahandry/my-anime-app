@@ -2,7 +2,6 @@
 
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 /* variables */
 /* base styles */
@@ -15,6 +14,11 @@
     @apply text-xl;
   }
 } */
+
+html {
+  /* Prevent content to move when there is no scrollbar  */
+  overflow-y: scroll;
+}
 
 :root {
   /* Colors */
@@ -95,6 +99,8 @@ a {
   color: #9da1b1;
   cursor: not-allowed;
 }
+
+@tailwind utilities;
 
 /* Layout */
 /* Grid */

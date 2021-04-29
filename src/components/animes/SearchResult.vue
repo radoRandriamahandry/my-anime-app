@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import { computed, ref, watch } from "vue";
-import AnimeListItem from "../animes/AnimeListItem";
+import { computed, ref, watch } from "vue"
+import AnimeListItem from "../animes/AnimeListItem"
 
 // Composables
-import useSearch from "@/composables/search/useSearch";
-import searchAnimeList from "@/composables/searchAnimeList";
+import useSearch from "@/composables/search/useSearch"
+import searchAnimeList from "@/composables/searchAnimeList"
 
 export default {
   components: {
@@ -29,26 +29,26 @@ export default {
   },
 
   setup() {
-    const date = new Date();
-    const year = ref(parseInt(date.getFullYear()));
-    const { searchTerm } = useSearch();
-    const { isLoading, animeList, fetchData } = searchAnimeList();
+    const date = new Date()
+    const year = ref(parseInt(date.getFullYear()))
+    const { searchTerm } = useSearch()
+    const { isLoading, animeList, fetchData } = searchAnimeList()
 
     watch(searchTerm, () => {
-      if (searchTerm.value != "") {
-        fetchData("POPULARITY_DESC", year, 10, searchTerm.value);
+      if (searchTerm.value !== "") {
+        fetchData("POPULARITY_DESC", year, 30, searchTerm.value)
       }
-    });
+    })
 
     // GET search Result
     const filteredAnime = computed(() => {
-      return animeList.value.length > 0 ? animeList.value : [];
-    });
+      return animeList.value.length > 0 ? animeList.value : []
+    })
     // END
 
-    return { isLoading, filteredAnime };
+    return { isLoading, filteredAnime }
   },
-};
+}
 </script>
 
 <style scoped></style>
