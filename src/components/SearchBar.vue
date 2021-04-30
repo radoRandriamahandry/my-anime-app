@@ -9,7 +9,7 @@
       <input
         type="text"
         placeholder="Live search"
-        v-model.trim="inputValue"
+        v-model.trim="searchTerm"
         class="text-sm bg-transparent outline-none placeholder-gray-400 focus:placeholder-gray-300"
       />
     </div>
@@ -17,27 +17,20 @@
 </template>
 
 <script>
-import { watch, ref } from "vue";
-import { SearchIcon } from "@heroicons/vue/outline";
-import useSearch from "@/composables/search/useSearch";
+// import { watch, ref } from "vue";
+import { SearchIcon } from "@heroicons/vue/outline"
+import useSearch from "@/composables/search/useSearch"
 
 export default {
   components: {
     SearchIcon,
   },
   setup() {
-    const { updateSearchTerm } = useSearch();
-    updateSearchTerm("");
+    const { searchTerm } = useSearch()
 
-    const inputValue = ref("");
-
-    watch(inputValue, () => {
-      updateSearchTerm(inputValue.value);
-    });
-
-    return { inputValue };
+    return { searchTerm }
   },
-};
+}
 </script>
 
 <style></style>
