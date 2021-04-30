@@ -36,7 +36,6 @@ const router = createRouter({
 const { updateSearchTerm } = useSearch()
 router.beforeEach((to, from, next) => {
   updateSearchTerm("")
-  console.log("BeforeEach function")
   next()
 })
 
