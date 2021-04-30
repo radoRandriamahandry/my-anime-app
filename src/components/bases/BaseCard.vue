@@ -24,8 +24,7 @@
           {{ status }}
         </div>
         <div class="text-secondary-300 text-sm text-right">
-          Score:
-          <span class="text-primary font-semibold">{{ score }}</span>
+          ep : {{ currentEpisode }} / {{ episodes }}
         </div>
       </div>
     </div>
@@ -36,18 +35,26 @@ export default {
   props: {
     imageUrl: {
       type: String,
+      required: true,
     },
     title: {
       type: String,
+      required: true,
     },
     status: {
       type: String,
+      required: true,
     },
-    score: {
-      required: false,
+    currentEpisode: {
+      type: [String, Number],
+      required: true,
+    },
+    episodes: {
+      type: [String, Number],
+      required: true,
     },
   },
-};
+}
 </script>
 
 <style></style>

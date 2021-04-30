@@ -4,5 +4,3 @@ export const sortByType = [
   { genre: "favourites", value: "FAVOURITES_DESC", title: "Users favourite" },
   { genre: "score", value: "SCORE_DESC", title: "Best scored" },
 ]
-
-// genre:,value, title

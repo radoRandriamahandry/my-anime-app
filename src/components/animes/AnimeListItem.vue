@@ -10,16 +10,17 @@
       :imageUrl="anime.imageUrl"
       :title="anime.title"
       :status="anime.status"
-      :score="anime.averageScore"
+      :currentEpisode="anime.currentEpisode"
+      :episodes="anime.episodes"
     />
   </div>
 </template>
 
 <script>
 // import { useRouter } from "vue-router";
-import { ref } from "vue";
-import BaseModal from "../bases/BaseModal";
-import BaseCard from "../bases/BaseCard";
+import { ref } from "vue"
+import BaseModal from "../bases/BaseModal"
+import BaseCard from "../bases/BaseCard"
 
 export default {
   props: ["anime"],
@@ -33,20 +34,20 @@ export default {
     // animeDetails.value = { ...props.anime };
 
     // Manage Modal Display
-    const showModal = ref(false);
+    const showModal = ref(false)
     const closeModal = () => {
-      showModal.value = false;
-      document.body.classList.remove("modal-open");
-    };
+      showModal.value = false
+      document.body.classList.remove("modal-open")
+    }
 
     const handleModalDisplay = () => {
-      showModal.value = true;
-      document.body.classList.add("modal-open");
-    };
+      showModal.value = true
+      document.body.classList.add("modal-open")
+    }
 
-    return { showModal, closeModal, handleModalDisplay };
+    return { showModal, closeModal, handleModalDisplay }
   },
-};
+}
 </script>
 
 <style>

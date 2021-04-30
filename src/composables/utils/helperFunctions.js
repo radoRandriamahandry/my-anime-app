@@ -11,19 +11,6 @@ export const formatTrailerUrl = (trailer) => {
   return trailer ? `https://www.youtube.com/embed/${trailer.id}` : "NC"
 }
 
-// Validate data
-// export const validateEpisodes = (episodes) => {
-//   if (episodes) {
-//     return episodes;
-//   } else {
-//     return "??";
-//   }
-// };
-
-// export const validateScore = (score) => {
-//   return score ? score : "NC";
-// };
-
 // Get and validate NextAiringEpisode and current episode
 export const getNextEpisodeInfo = (nextAiringEpisode) => {
   let currentEpisode
