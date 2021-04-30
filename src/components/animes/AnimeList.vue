@@ -62,8 +62,6 @@ export default {
     const date = new Date()
     let year = parseInt(date.getFullYear())
 
-    // const perPage = parseInt(props.perPage) || 5
-
     const sortBy = computed(() => {
       return props.sortBy
     })

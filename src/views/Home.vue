@@ -3,12 +3,18 @@
     <!-- <SkeletonAnimeList /> -->
     <div v-show="!searchActive">
       <AnimeList
-        :sortBy="SORT_BY_TYPE.popularity"
+        :sortBy="SORT_BY_TYPE[0].value"
         :year="year"
-        title="Most Popular"
+        :title="SORT_BY_TYPE[0].title"
       />
-      <AnimeList :sortBy="SORT_BY_TYPE.trend" title="Most Trending" />
-      <AnimeList :sortBy="SORT_BY_TYPE.favourites" title="Users Favourites" />
+      <AnimeList
+        :sortBy="SORT_BY_TYPE[1].value"
+        :title="SORT_BY_TYPE[1].title"
+      />
+      <AnimeList
+        :sortBy="SORT_BY_TYPE[2].value"
+        :title="SORT_BY_TYPE[2].title"
+      />
     </div>
 
     <div v-if="searchActive">

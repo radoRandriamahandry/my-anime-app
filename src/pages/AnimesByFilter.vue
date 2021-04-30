@@ -1,10 +1,10 @@
 <template>
   <div v-show="!searchActive" class="max-w-7xl mx-auto my-0 px-4 py-0">
     <AnimeList
-      :sortBy="sortBy"
+      :sortBy="sortBy.value"
       :year="year"
       :perPage="20"
-      title="Just some test"
+      :title="sortBy.title"
     />
   </div>
   <div v-if="searchActive">
@@ -45,7 +45,10 @@ export default {
     const year = ref(parseInt(date.getFullYear()))
 
     const sortBy = computed(() => {
-      return sortByType[props.filter]
+      const sortByTypeItem = sortByType.find((item) => {
+        return item.genre == props.filter
+      })
+      return sortByTypeItem
     })
 
     return { sortBy, year, searchActive }
