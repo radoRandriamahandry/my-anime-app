@@ -1,7 +1,4 @@
 <template>
-  <!-- <button @click="updateActiveSlideListIndex('prev')">prev</button> -->
-  <!-- <button @click="updateActiveSlideListIndex('next')">next</button> -->
-
   <div class="mb-9">
     <div v-if="isLoading">
       <SkeletonAnimeList />
@@ -29,7 +26,7 @@ import SkeletonAnimeList from "@/components/skeleton/SkeletonAnimeList"
 
 // Composables
 import getAnimeList from "@/composables/getAnimeList"
-import { computed, watch } from "vue"
+import { computed, watchEffect } from "vue"
 
 export default {
   components: {
@@ -62,21 +59,21 @@ export default {
     const date = new Date()
     let year = parseInt(date.getFullYear())
 
-    const sortBy = computed(() => {
-      return props.sortBy
-    })
+    // const sortBy = computed(() => {
+    //   return props.sortBy
+    // })
 
     if (props.year) {
       year = parseInt(props.year)
     }
     const { isLoading, animeList, fetchData } = getAnimeList()
 
-    watch(sortBy, async () => {
+    watchEffect(() => {
       animeList.value = []
-      await fetchData(sortBy.value, year, parseInt(props.perPage))
+      fetchData(props.sortBy, year, parseInt(props.perPage))
     })
 
-    fetchData(sortBy.value, year, parseInt(props.perPage))
+    // fetchData(sortBy.value, year, parseInt(props.perPage))
 
     return { isLoading, animeList }
   },

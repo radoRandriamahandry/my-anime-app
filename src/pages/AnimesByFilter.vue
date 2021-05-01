@@ -36,6 +36,7 @@ export default {
   },
   setup(props) {
     // Manage Live search
+    // TODO Create a global store for searchTerm
     const { searchTerm } = useSearch()
     const searchActive = computed(() => {
       return searchTerm.value == "" ? false : true

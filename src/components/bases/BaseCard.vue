@@ -24,7 +24,7 @@
           {{ status }}
         </div>
         <div class="text-secondary-300 text-sm text-right">
-          ep : {{ currentEpisode }} / {{ episodes }}
+          ep : <span class="">{{ currentEpisode }} / {{ episodes }}</span>
         </div>
       </div>
     </div>
