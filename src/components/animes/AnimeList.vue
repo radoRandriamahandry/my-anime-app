@@ -59,10 +59,6 @@ export default {
     const date = new Date()
     let year = parseInt(date.getFullYear())
 
-    // const sortBy = computed(() => {
-    //   return props.sortBy
-    // })
-
     if (props.year) {
       year = parseInt(props.year)
     }
@@ -72,8 +68,6 @@ export default {
       animeList.value = []
       fetchData(props.sortBy, year, parseInt(props.perPage))
     })
-
-    // fetchData(sortBy.value, year, parseInt(props.perPage))
 
     return { isLoading, animeList }
   },
